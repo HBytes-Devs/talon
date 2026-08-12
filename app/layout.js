@@ -10,6 +10,7 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://hbytes-devs.github.io/talon"),
   title: `${BRAND.name} - ${BRAND.tagline}`,
   description: `Join ${BRAND.name} by ${BRAND.company}. ML-based automated employee productivity & time tracking. 3 users free forever.`,
   icons: {

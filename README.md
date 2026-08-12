@@ -41,6 +41,12 @@ Or with Docker:
 docker compose up -d --build
 ```
 
+## GitHub Pages
+
+Live site: [https://hbytes-devs.github.io/talon/](https://hbytes-devs.github.io/talon/)
+
+Pushes to `main` build a static export and deploy via GitHub Actions.
+
 ## Stack
 
 - Next.js 16

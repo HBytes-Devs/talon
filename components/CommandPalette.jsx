@@ -46,16 +46,20 @@ const DESTINATIONS = [
 ];
 
 function goTo(href) {
+  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const homePath = base || "/";
   if (href.startsWith("/#") || href.startsWith("#")) {
     const hash = href.includes("#") ? `#${href.split("#")[1]}` : href;
-    if (window.location.pathname !== "/") {
-      window.location.href = `/${hash}`;
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    const atHome = path === homePath || path === "/";
+    if (!atHome) {
+      window.location.href = `${base}/${hash}`;
       return;
     }
     document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
     return;
   }
-  window.location.href = href;
+  window.location.href = `${base}${href}`;
 }
 
 export default function CommandPalette({ open, onClose }) {
