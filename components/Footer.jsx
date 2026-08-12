@@ -55,7 +55,7 @@ export default function Footer() {
 
       <div className="container mt-12 flex flex-col gap-2 border-t border-[var(--border-subtle)] pt-6 text-xs text-[var(--fg-tertiary)] md:flex-row md:items-center md:justify-between">
         <p>© 2026 Talon. Made by HawkBytes. Not affiliated with OpenAI, Anthropic, or Google.</p>
-        <p>hawkbytes.com</p>
+        <p>hawkbytes.cloud</p>
       </div>
     </footer>
   );
