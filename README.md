@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+﻿# Talon
 
-## Getting Started
+**Talon** is HawkBytes’ workforce productivity insights platform — ML-based employee productivity and time tracking.
 
-First, run the development server:
+Win back productivity & profits affected by distractions. Track your team without losing yours.
+
+## Product
+
+- Live activity, screenshots, and status (working, idle, meeting, break)
+- Idle, break, and meeting logging
+- Time, attendance, and leave
+- Field location tracking and site visits
+- Tasks, pay rates, and invoices from tracked time
+- Screenshot blur, ECC encryption, non-intrusive monitoring
+- **3 users free forever** · Premium from **$3.99 / user / month**
+
+Website: Next.js + Tailwind. Brand: **Talon by HawkBytes**.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- `⌘K` / `Ctrl+K` — command palette
+- Hero panel tabs: **Live**, **Idle**, **Reports** (dummy data)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Production
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+Or with Docker:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker compose up -d --build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
+- Next.js 16
+- React 19
+- Tailwind CSS 4
+- GSAP + Lenis
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Private. © 2026 HawkBytes.
