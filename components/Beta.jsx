@@ -1,3 +1,5 @@
+import { BRAND } from "../lib/brand";
+
 export default function Beta() {
   return (
     <section id="beta" className="section pb-28">
@@ -13,7 +15,7 @@ export default function Beta() {
               No credit card. Simple & easy to use.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="mailto:hello@hawkbytes.com" className="btn btn-primary">
+              <a href={`mailto:${BRAND.email}`} className="btn btn-primary">
                 Start free
               </a>
               <span className="inline-flex items-center text-sm text-[var(--fg-tertiary)]">
