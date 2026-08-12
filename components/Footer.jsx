@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import LogoMark from "./LogoMark";
 
 const PRODUCT = [
   { label: "Features", href: "/#product" },
@@ -29,13 +29,7 @@ export default function Footer() {
       <div className="container grid gap-10 md:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,0.7fr))]">
         <div>
           <div className="flex items-center gap-2.5">
-            <Image
-              src="/linea/linea-app-icon-64.png"
-              alt="Talon"
-              width={28}
-              height={28}
-              className="rounded-[7px]"
-            />
+            <LogoMark size={28} className="rounded-[7px]" />
             <span className="font-semibold">Talon</span>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-6 text-[var(--fg-secondary)]">

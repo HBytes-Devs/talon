@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import LogoMark from "./LogoMark";
 
 const NAV = [
   { href: "/#product", label: "Features" },
@@ -37,16 +37,10 @@ export default function Header({ onOpenCommand }) {
       >
         <Link
           href="/"
+          aria-label="Talon"
           className="flex shrink-0 items-center gap-2 rounded-[10px] px-2.5 py-1.5"
         >
-          <Image
-            src="/linea/linea-app-icon-64.png"
-            alt="Talon"
-            width={26}
-            height={26}
-            className="rounded-[7px]"
-            priority
-          />
+          <LogoMark size={26} className="rounded-[7px]" />
           <span className="hidden font-semibold tracking-tight text-[var(--fg-primary)] sm:inline">
             Talon
           </span>

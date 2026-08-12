@@ -14,11 +14,8 @@ export const metadata = {
   title: `${BRAND.name} - ${BRAND.tagline}`,
   description: `Join ${BRAND.name} by ${BRAND.company}. ML-based automated employee productivity & time tracking. 3 users free forever.`,
   icons: {
-    icon: [
-      { url: "/linea/linea-app-icon-64.png" },
-      { url: "/favicon.ico" },
-    ],
-    apple: "/linea/linea-app-icon-180.png",
+    icon: [{ url: "/talon-mark.svg", type: "image/svg+xml" }],
+    apple: "/talon-mark.svg",
   },
 };
 
