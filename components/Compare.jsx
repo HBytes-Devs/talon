@@ -10,8 +10,8 @@ const ROWS = [
 
 export default function Compare() {
   return (
-    <section className="section">
-      <div className="container">
+    <section className="scroll-anchor section-pad" id="compare">
+      <div className="container-grid">
         <div className="max-w-3xl" data-reveal="true">
           <span className="pill">Why Talon?</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-5xl">

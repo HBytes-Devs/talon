@@ -4,9 +4,11 @@ import "./globals.css";
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-ibm-plex-mono",
   display: "swap",
+  preload: true,
+  fallback: ["ui-monospace", "monospace"],
 });
 
 export const metadata = {

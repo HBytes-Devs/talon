@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { DUR, STAGGER } from "../lib/motion";
 
@@ -82,9 +82,9 @@ export default function Hero({ onOpenCommand }) {
           gsap.set(
             [
               headline,
-              ".summon-keystroke span",
-              ".summon-panel",
-              ".summon-workspaces",
+              ".hero-stage .summon-keystroke span",
+              ".hero-stage .summon-panel",
+              ".hero-stage .summon-workspaces",
               ".hero-copy [data-hero-badge]",
               ".hero-copy [data-hero-copy]",
               ".hero-underline",
@@ -98,7 +98,7 @@ export default function Hero({ onOpenCommand }) {
             });
 
             tl.fromTo(
-              ".summon-keystroke span",
+              ".hero-stage .summon-keystroke span",
               { autoAlpha: 0, y: -6 },
               {
                 autoAlpha: 1,
@@ -110,7 +110,7 @@ export default function Hero({ onOpenCommand }) {
             );
             tl.addLabel("press", ">-0.02");
             tl.to(
-              ".summon-keystroke span:last-child",
+              ".hero-stage .summon-keystroke span:last-child",
               {
                 scale: 0.94,
                 duration: 0.06,
@@ -123,18 +123,19 @@ export default function Hero({ onOpenCommand }) {
             );
             tl.addLabel("summon", "press+=0.02");
             tl.fromTo(
-              ".summon-panel",
-              { autoAlpha: 0, y: 14, scale: 0.965 },
+              ".hero-stage .summon-panel",
+              { autoAlpha: 0, y: 14, scale: 0.965, rotation: -2.6 },
               {
                 autoAlpha: 1,
                 y: 0,
                 scale: 1,
+                rotation: -2.6,
                 duration: 0.5,
                 transformOrigin: "52% 42%",
               },
               "summon"
             );
-            tl.to(".summon-workspaces", { autoAlpha: 1, duration: 0.8 }, "summon");
+            tl.to(".hero-stage .summon-workspaces", { autoAlpha: 1, duration: 0.8 }, "summon");
             tl.fromTo(
               ".hero-copy [data-hero-badge]",
               { autoAlpha: 0, y: 12 },
@@ -172,6 +173,18 @@ export default function Hero({ onOpenCommand }) {
               { strokeDashoffset: 0, duration: 0.42, ease: "power3.out" },
               "<"
             );
+
+            tl.add(() => {
+              gsap.to(".hero-stage .summon-panel", {
+                y: -5,
+                rotation: -2.1,
+                duration: 3.5,
+                ease: "sine.inOut",
+                yoyo: true,
+                repeat: -1,
+                transformOrigin: "52% 42%",
+              });
+            });
 
             return tl;
           };
@@ -229,84 +242,111 @@ export default function Hero({ onOpenCommand }) {
 
   return (
     <div className="hero-intro contents" ref={rootRef}>
-    <section className="hero-section section" id="top">
-        <div className="container-wide grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-          <div className="hero-copy">
-            <div
-              data-hero-badge="true"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--surface-2)] px-3 py-1.5 text-xs font-medium text-[var(--fg-secondary)]"
-            >
-              <span className="trust-dot" />
-              Workforce productivity insights
-              <span className="kbd-chip ml-1">3 free</span>
-            </div>
+      <section
+        className="hero-section container-grid grid min-h-[760px] items-center gap-12 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pt-24"
+        id="top"
+      >
+        <div className="hero-copy">
+          <div
+            data-hero-badge="true"
+            className="mb-7 inline-flex items-center gap-3 rounded-[10px] border border-[var(--border-subtle)] bg-[var(--surface-1)] px-3 py-2 text-sm font-medium text-[var(--fg-secondary)] shadow-[var(--shadow-card)] backdrop-blur-xl"
+          >
+            <span className="inline-block size-2 rounded-full bg-[var(--success)] shadow-[0_0_14px_var(--success-glow)]" />
+            Workforce productivity insights
+            <span className="kbd">3 free</span>
+          </div>
 
-            <h1 className="display-type mt-6 max-w-xl text-balance text-5xl font-bold tracking-tight md:text-7xl">
+          <div className="hero-headline">
+            <h1 className="display-type max-w-[10.8ch] text-balance text-5xl font-bold leading-[0.96] text-[var(--fg-primary)] sm:text-6xl lg:text-7xl">
               Win back productivity & profits affected by distractions.
             </h1>
             <svg
-              className="hero-underline mt-2"
-              width="180"
-              height="12"
-              viewBox="0 0 180 12"
-              fill="none"
               aria-hidden="true"
+              className="hero-underline"
+              viewBox="0 0 220 12"
+              preserveAspectRatio="none"
+              fill="none"
             >
               <path
-                d="M2 8 C40 2, 90 12, 178 4"
+                d="M2 7.5C40 3.5 92 2.5 138 5.5C168 7.5 196 8.5 218 6"
                 stroke="var(--indigo-500)"
-                strokeWidth="2.2"
+                strokeWidth="3"
                 strokeLinecap="round"
+                fill="none"
                 strokeDasharray="120"
                 strokeDashoffset="120"
-                opacity="0.55"
               />
             </svg>
-
-            <p
-              data-hero-copy="true"
-              className="mt-6 max-w-lg text-lg leading-8 text-[var(--fg-secondary)]"
-            >
-              Managers&apos; time is expensive! Track your team&apos;s productivity without losing
-              yours. Talon helps businesses boost employee productivity and improve time tracking
-              through automated distraction-free monitoring and real-time feedback.
-            </p>
-
-            <div data-hero-copy="true" className="mt-8 flex flex-wrap gap-3">
-              <a href="#beta" className="btn btn-primary">
-                3 users free forever!
-              </a>
-              <a href="#beta" className="btn btn-secondary">
-                Start free
-              </a>
-              <button type="button" className="btn btn-secondary" onClick={onOpenCommand}>
-                Try live tracking
-              </button>
-            </div>
-
-            <p data-hero-copy="true" className="mt-5 text-sm text-[var(--fg-tertiary)]">
-              No credit card. Simple & easy to use. Windows, Mac & mobile.
-            </p>
-
-            <div data-hero-copy="true" className="mt-8 flex flex-wrap gap-2 text-xs font-medium text-[var(--fg-secondary)]">
-              <div className="rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-                Software & Browsing
-              </div>
-              <div className="rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-                Live stream & Screenshots
-              </div>
-              <div className="rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-                Time & Attendance
-              </div>
-            </div>
           </div>
 
-          <div
-            className="hero-stage relative hidden min-w-0 sm:block"
-            aria-label="Talon live tracking dashboard for the current team"
-          >
+          <div className="hero-stage-mobile mt-8 sm:hidden">
             <SummonDemo />
           </div>
+
+          <p
+            data-hero-copy="true"
+            className="mt-7 max-w-xl text-pretty text-xl leading-8 text-[var(--fg-secondary)]"
+          >
+            Managers&apos; time is expensive! Track your team&apos;s productivity without losing
+            yours. Talon helps businesses boost employee productivity and improve time tracking
+            through automated distraction-free monitoring and real-time feedback.
+          </p>
+
+          <div data-hero-copy="true" className="mt-9 flex flex-wrap gap-3">
+            <a href="#beta" className="btn btn-primary h-14 px-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-5"
+                aria-hidden="true"
+              >
+                <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+              </svg>
+              <span className="flex flex-col justify-center gap-1 leading-none">
+                <span className="text-[10px] font-normal uppercase tracking-[0.12em] opacity-75 leading-none">
+                  3 users free forever
+                </span>
+                <span className="leading-none">Start free</span>
+              </span>
+            </a>
+            <button type="button" className="btn btn-secondary h-14 px-5" onClick={onOpenCommand}>
+              Try live tracking <span className="kbd">⌘K</span>
+            </button>
+          </div>
+
+          <p data-hero-copy="true" className="mt-5 text-sm text-[var(--fg-tertiary)]">
+            No credit card. Simple & easy to use. Windows, Mac & mobile.
+          </p>
+
+          <div
+            data-hero-copy="true"
+            className="mt-9 flex max-w-xl flex-nowrap gap-2 overflow-x-auto text-xs text-[var(--fg-secondary)]"
+          >
+            <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
+              Software & Browsing
+            </div>
+            <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
+              Live stream & Screenshots
+            </div>
+            <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
+              Time & Attendance
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="hero-stage relative hidden min-w-0 sm:block"
+          aria-label="Talon live tracking dashboard for the current team"
+        >
+          <SummonDemo />
         </div>
       </section>
     </div>
@@ -315,43 +355,7 @@ export default function Hero({ onOpenCommand }) {
 
 function SummonDemo() {
   const [tabId, setTabId] = useState("live");
-  const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(0);
   const tab = TABS.find((t) => t.id === tabId) ?? TABS[0];
-
-  const rows = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return tab.rows;
-    return tab.rows.filter(
-      (row) =>
-        row.title.toLowerCase().includes(q) ||
-        row.blurb.toLowerCase().includes(q) ||
-        row.tag.toLowerCase().includes(q)
-    );
-  }, [query, tab]);
-
-  const activeIndex = rows.length ? Math.min(selected, rows.length - 1) : -1;
-
-  const onPanelKeyDown = (e) => {
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setSelected((i) => Math.min((rows.length ? i : 0) + 1, Math.max(rows.length - 1, 0)));
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setSelected((i) => Math.max(i - 1, 0));
-    } else if (e.key === "Escape") {
-      setQuery("");
-      setSelected(0);
-    } else if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-      const idx = TABS.findIndex((t) => t.id === tabId);
-      const next = e.key === "ArrowRight"
-        ? TABS[(idx + 1) % TABS.length]
-        : TABS[(idx - 1 + TABS.length) % TABS.length];
-      setTabId(next.id);
-      setQuery("");
-      setSelected(0);
-    }
-  };
 
   return (
     <div className="summon-stage">
@@ -384,96 +388,78 @@ function SummonDemo() {
         <span>L</span>
       </div>
 
-      <div
-        className="summon-panel magnetic-panel"
-        tabIndex={0}
-        onKeyDown={onPanelKeyDown}
-      >
+      <div className="summon-panel magnetic-panel">
         <div className="surface-sweep" aria-hidden="true" />
         <div className="summon-panel-top">
           <span className="summon-status">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-4"
+              aria-hidden="true"
+            >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
             Native tracking · non-intrusive
           </span>
-          <span className="kbd-chip">{tab.label.toUpperCase()}</span>
+          <span className="kbd">⌃⌥L</span>
         </div>
 
-        <label className="summon-search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="summon-search">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="size-4"
+            aria-hidden="true"
+          >
+            <path d="m21 21-4.34-4.34" />
             <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.3-4.3" />
           </svg>
-          <input
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSelected(0);
-            }}
-            placeholder={tab.query}
-            aria-label={`Search ${tab.label.toLowerCase()} dummy data`}
-            className="min-w-0 flex-1 bg-transparent font-mono text-sm text-[var(--fg-primary)] outline-none placeholder:text-[var(--fg-tertiary)]"
-          />
-          {query ? (
-            <button
-              type="button"
-              className="kbd-chip"
-              onClick={() => {
-                setQuery("");
-                setSelected(0);
-              }}
-            >
-              esc
-            </button>
-          ) : (
-            <span className="kbd-chip">esc</span>
-          )}
-        </label>
+          <span className="summon-query">
+            <span className="font-mono">{tab.query}</span>
+            <span className="summon-caret" aria-hidden="true" />
+          </span>
+          <span className="kbd">esc</span>
+        </div>
 
-        <div className="summon-toolbar" role="tablist" aria-label="Tracking views">
+        <div className="summon-toolbar" aria-hidden="true">
           {TABS.map((item) => (
             <button
               key={item.id}
               type="button"
-              role="tab"
-              aria-selected={tabId === item.id}
               className={tabId === item.id ? "is-active" : ""}
-              onClick={() => {
-                setTabId(item.id);
-                setQuery("");
-                setSelected(0);
-              }}
+              onClick={() => setTabId(item.id)}
             >
               {item.label}
             </button>
           ))}
         </div>
 
-        <div className="summon-list" role="listbox" aria-label={tab.label}>
-          {rows.length ? (
-            rows.map((row, i) => (
-              <button
-                key={row.title}
-                type="button"
-                role="option"
-                aria-selected={i === activeIndex}
-                className={`summon-row ${i === activeIndex ? "summon-row-active" : ""}`}
-                onClick={() => setSelected(i)}
-              >
-                <span className="summon-row-dot" />
-                <div className="summon-row-copy">
-                  <strong>{row.title}</strong>
-                  <em>{row.blurb}</em>
-                </div>
-                <span className="summon-row-tag">{row.tag}</span>
-              </button>
-            ))
-          ) : (
-            <p className="rounded-[11px] border border-[var(--border-subtle)] bg-[var(--surface-2)] px-3 py-4 text-sm text-[var(--fg-secondary)]">
-              No dummy matches for “{query}”.
-            </p>
-          )}
+        <div className="summon-list">
+          {tab.rows.map((row, i) => (
+            <div key={row.title} className={`summon-row ${i === 0 ? "summon-row-active" : ""}`}>
+              <span className="summon-row-dot" />
+              <span className="summon-row-copy">
+                <strong>{row.title}</strong>
+                <em>{row.blurb}</em>
+              </span>
+              <span className="summon-row-tag">{row.tag}</span>
+            </div>
+          ))}
         </div>
 
         <div className="summon-context">
@@ -483,7 +469,12 @@ function SummonDemo() {
         </div>
 
         <div className="summon-footer">
-          <span>↑↓ navigate · ↵ open</span>
+          <span>
+            <span className="kbd">↑↓</span> navigate
+          </span>
+          <span>
+            <span className="kbd">↵</span> open
+          </span>
           <span>{tab.footer}</span>
         </div>
       </div>

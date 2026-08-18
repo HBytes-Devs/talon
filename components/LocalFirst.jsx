@@ -1,7 +1,7 @@
 export default function LocalFirst() {
   return (
-    <section className="section" id="local-first">
-      <div className="container grid items-center gap-10 lg:grid-cols-2">
+    <section className="section-pad bg-[var(--surface-soft)]" id="local-first">
+      <div className="container-grid grid items-center gap-10 lg:grid-cols-2">
         <div data-reveal="true">
           <span className="pill">Secure & IP protected</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">

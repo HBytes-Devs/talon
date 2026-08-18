@@ -1,10 +1,10 @@
 export default function Pricing() {
   return (
-    <section id="pricing" className="pricing-section section">
-      <div className="container">
-        <div className="max-w-3xl" data-reveal="true">
+    <section id="pricing" className="scroll-anchor section-pad pricing-section">
+      <div className="container-grid">
+        <div className="max-w-2xl" data-reveal="true">
           <span className="pill">Pricing</span>
-          <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">
+          <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-5xl">
             3 users free forever!
           </h2>
           <p className="mt-5 text-lg leading-8 text-[var(--fg-secondary)]">
@@ -13,12 +13,14 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="pricing-ledger mt-12 grid gap-5 lg:grid-cols-3" data-reveal-stagger="true">
-          <div className="frost-panel pricing-ledger-sheet p-6">
+        <div className="pricing-ledger mt-10 grid items-stretch gap-4 lg:grid-cols-3" data-reveal-stagger="true">
+          <div className="frost-panel pricing-ledger-sheet flex min-w-0 flex-col p-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
               Free
             </p>
-            <h3 className="mt-2 text-xl font-bold">Up to 3 users</h3>
+            <h3 className="display-type mt-2 text-xl font-bold text-[var(--fg-primary)]">
+              Up to 3 users
+            </h3>
             <p className="mt-4 text-4xl font-bold">
               $0
               <span className="ml-2 text-sm font-medium text-[var(--fg-secondary)]">
@@ -44,7 +46,9 @@ export default function Pricing() {
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
               Premium
             </p>
-            <h3 className="mt-2 text-xl font-bold">4th user onwards</h3>
+            <h3 className="display-type mt-2 text-xl font-bold text-[var(--fg-primary)]">
+              4th user onwards
+            </h3>
             <p className="mt-4 text-4xl font-bold">
               $3.99
               <span className="ml-2 text-sm font-medium text-[var(--fg-secondary)]">
@@ -73,7 +77,9 @@ export default function Pricing() {
             <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
               Business
             </p>
-            <h3 className="mt-2 text-xl font-bold">Teams & enterprise</h3>
+            <h3 className="display-type mt-2 text-xl font-bold text-[var(--fg-primary)]">
+              Teams & enterprise
+            </h3>
             <div className="mt-5 space-y-4 text-sm">
               <div className="rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-2)] p-3">
                 <div className="flex items-baseline justify-between">

@@ -9,8 +9,8 @@ const LOGS = [
 
 export default function Audit() {
   return (
-    <section className="audit-act section">
-      <div className="container grid items-start gap-10 lg:grid-cols-2">
+    <section className="audit-act section-pad">
+      <div className="container-grid grid items-start gap-10 lg:grid-cols-2">
         <div data-reveal="true">
           <span className="inline-flex items-center gap-1 rounded-[8px] border border-[var(--audit-border)] bg-[rgba(255,255,255,0.06)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--audit-fg)]">
             Audit trail

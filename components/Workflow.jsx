@@ -31,11 +31,11 @@ export default function Workflow() {
   return (
     <section
       id="workflow"
-      className="workflow-section line-host section border-y border-[var(--border-subtle)]"
+      className="workflow-section line-host scroll-anchor section-pad border-y border-[var(--border-subtle)]"
     >
       <LineSegment variant="workflow" />
-      <div className="container grid items-start gap-10 lg:grid-cols-2">
-        <div data-reveal="true">
+      <div className="container-grid grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
+        <div className="max-w-xl" data-reveal="true">
           <span className="pill">How it works</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">
             Track your team&apos;s productivity without losing yours.
@@ -45,8 +45,10 @@ export default function Workflow() {
             real-time feedback so you know where time & efforts are spent.
           </p>
           <div className="workflow-hotkey mt-8 inline-flex items-center gap-2">
-            <span className="kbd-chip">3</span>
-            <strong className="pl-1 text-sm">users free forever</strong>
+            <span>3</span>
+            <span>free</span>
+            <span>∞</span>
+            <strong>users forever</strong>
           </div>
         </div>
 
@@ -68,18 +70,16 @@ export default function Workflow() {
             {STEPS.map((step) => (
               <div key={step.n} className="workflow-step">
                 <div className="workflow-step-marker">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--surface-1)] font-mono text-xs font-semibold">
-                    {step.n}
-                  </span>
+                  <span>{step.n}</span>
                 </div>
                 <div className="workflow-step-body">
                   <div className="flex items-center justify-between gap-3">
-                    <h4 className="text-base font-bold">{step.title}</h4>
+                    <h4 className="text-xl font-bold">{step.title}</h4>
                     <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
                       {step.tag}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[var(--fg-secondary)]">{step.body}</p>
+                  <p className="mt-2 text-base leading-6 text-[var(--fg-secondary)]">{step.body}</p>
                 </div>
               </div>
             ))}

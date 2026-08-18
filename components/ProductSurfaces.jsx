@@ -17,9 +17,9 @@ const VERSIONS = [
 
 export default function ProductSurfaces() {
   return (
-    <section id="product" className="section line-host">
+    <section id="product" className="line-host scroll-anchor section-pad">
       <LineSegment variant="features" />
-      <div className="container space-y-20">
+      <div className="container-grid space-y-20">
         <div data-reveal="true">
           <span className="pill">Why Talon?</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">

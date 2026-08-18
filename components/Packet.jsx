@@ -2,9 +2,9 @@ import LineSegment from "./LineSegment";
 
 export default function Packet() {
   return (
-    <section className="packet-split-section section line-host">
+    <section className="packet-split-section line-host scroll-anchor section-pad">
       <LineSegment variant="packet" />
-      <div className="container">
+      <div className="container-grid">
         <div className="max-w-3xl" data-reveal="true">
           <span className="pill">Beyond time tracking</span>
           <h2 className="display-type mt-5 max-w-2xl text-balance text-4xl font-bold md:text-6xl">
@@ -25,7 +25,7 @@ export default function Packet() {
           <div className="packet-source">
             <div className="packet-source-head">
               <span>Team productivity</span>
-              <span className="kbd-chip">⌃⌥L</span>
+              <span className="kbd">⌃⌥L</span>
             </div>
             <p className="mt-3 text-sm leading-6 text-[var(--fg-secondary)]">
               See productive vs distraction after a new policy. Time per client is already in the
@@ -80,7 +80,7 @@ export default function Packet() {
                   <span className="pill">{card.label}</span>
                   <span className="font-mono text-xs text-[var(--fg-tertiary)]">{card.n}</span>
                 </div>
-                <h3 className="mt-4 text-base font-bold">{card.title}</h3>
+                <h3 className="mt-4 text-xl font-bold">{card.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-[var(--fg-secondary)]">{card.body}</p>
                 <span className="mt-4 inline-flex rounded-[8px] border border-[var(--border-subtle)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[11px]">
                   {card.chip}
