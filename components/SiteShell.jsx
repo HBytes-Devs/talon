@@ -8,7 +8,6 @@ import MotionProvider from "./MotionProvider";
 
 export default function SiteShell({ children }) {
   const [cmdOpen, setCmdOpen] = useState(false);
-  const openCmd = useCallback(() => setCmdOpen(true), []);
   const closeCmd = useCallback(() => setCmdOpen(false), []);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function SiteShell({ children }) {
       >
         Skip to content
       </a>
-      <Header onOpenCommand={openCmd} />
+      <Header />
       {children}
       <Footer />
       <CommandPalette open={cmdOpen} onClose={closeCmd} />

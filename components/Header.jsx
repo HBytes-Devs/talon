@@ -17,7 +17,7 @@ const NAV = [
 const linkClass =
   "rounded-[8px] px-3 py-2 text-base font-normal text-[var(--fg-secondary)] transition hover:bg-[var(--surface-2)] hover:text-[var(--fg-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-strong)]";
 
-export default function Header({ onOpenCommand }) {
+export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function Header({ onOpenCommand }) {
 
   return (
     <header
-      className={`site-nav-shell pointer-events-none fixed left-1/2 z-40 w-[calc(100vw-32px)] -translate-x-1/2 ${
+      className={`site-nav-shell pointer-events-none fixed inset-x-4 z-40 w-auto max-w-[calc(100%-2rem)] ${
         scrolled ? "is-scrolled" : ""
       }`}
     >
@@ -106,19 +106,11 @@ export default function Header({ onOpenCommand }) {
           })}
         </div>
 
-        <button
-          type="button"
-          onClick={onOpenCommand}
-          aria-label="Open command palette"
-          className="ml-1 hidden items-center rounded-[8px] border border-[var(--border-subtle)] px-2 py-1.5 text-[var(--fg-secondary)] transition hover:bg-[var(--surface-2)] hover:text-[var(--fg-primary)] navdesk:lg:inline-flex"
-        >
-          <span className="kbd pointer-events-none">⌘K</span>
-        </button>
         <Link
           href="/#beta"
-          className="btn btn-primary ml-1 hidden h-9 shrink-0 px-3 navdesk:inline-flex"
+          className="btn btn-primary ml-1 !hidden h-9 shrink-0 px-3 navdesk:!inline-flex"
         >
-          Start free
+          Sign in
         </Link>
       </nav>
 
@@ -142,22 +134,12 @@ export default function Header({ onOpenCommand }) {
               </Link>
             ))}
             <div className="mt-1 flex items-center gap-2 border-t border-[var(--border-subtle)] p-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  onOpenCommand();
-                }}
-                className="inline-flex h-9 items-center rounded-[8px] border border-[var(--border-subtle)] px-3 text-sm text-[var(--fg-secondary)]"
-              >
-                <span className="kbd">⌘K</span>
-              </button>
               <Link
                 href="/#beta"
                 className="btn btn-primary h-9 flex-1 px-3"
                 onClick={() => setMenuOpen(false)}
               >
-                Start free
+                Sign in
               </Link>
             </div>
           </div>

@@ -99,7 +99,13 @@ export default function MotionProvider({ children }) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         document.documentElement.classList.add("motion-on");
 
-        const lenis = new Lenis({ autoRaf: false });
+        const lenis = new Lenis({
+          autoRaf: false,
+          lerp: 0.16,
+          wheelMultiplier: 1.12,
+          touchMultiplier: 1.2,
+          smoothWheel: true,
+        });
         const onTick = (time) => lenis.raf(time * 1000);
         lenis.on("scroll", ScrollTrigger.update);
         gsap.ticker.add(onTick);

@@ -243,21 +243,21 @@ export default function Hero({ onOpenCommand }) {
   return (
     <div className="hero-intro contents" ref={rootRef}>
       <section
-        className="hero-section container-grid grid min-h-[760px] items-center gap-12 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pt-24"
+        className="hero-section container-grid grid min-h-[760px] min-w-0 items-center gap-12 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pt-24"
         id="top"
       >
-        <div className="hero-copy">
+        <div className="hero-copy min-w-0 max-w-full">
           <div
             data-hero-badge="true"
-            className="mb-7 inline-flex items-center gap-3 rounded-[10px] border border-[var(--border-subtle)] bg-[var(--surface-1)] px-3 py-2 text-sm font-medium text-[var(--fg-secondary)] shadow-[var(--shadow-card)] backdrop-blur-xl"
+            className="mb-7 inline-flex max-w-full flex-wrap items-center gap-3 rounded-[10px] border border-[var(--border-subtle)] bg-[var(--surface-1)] px-3 py-2 text-sm font-medium text-[var(--fg-secondary)] shadow-[var(--shadow-card)] backdrop-blur-xl"
           >
-            <span className="inline-block size-2 rounded-full bg-[var(--success)] shadow-[0_0_14px_var(--success-glow)]" />
+            <span className="inline-block size-2 shrink-0 rounded-full bg-[var(--success)] shadow-[0_0_14px_var(--success-glow)]" />
             Workforce productivity insights
             <span className="kbd">3 free</span>
           </div>
 
           <div className="hero-headline">
-            <h1 className="display-type max-w-[10.8ch] text-balance text-5xl font-bold leading-[0.96] text-[var(--fg-primary)] sm:text-6xl lg:text-7xl">
+            <h1 className="display-type max-w-full text-balance text-[2.15rem] font-bold leading-[1.05] text-[var(--fg-primary)] sm:max-w-[10.8ch] sm:text-6xl sm:leading-[0.96] lg:text-7xl">
               Win back productivity & profits affected by distractions.
             </h1>
             <svg
@@ -279,7 +279,7 @@ export default function Hero({ onOpenCommand }) {
             </svg>
           </div>
 
-          <div className="hero-stage-mobile mt-8 sm:hidden">
+          <div className="hero-stage-mobile mt-8 max-w-full overflow-hidden sm:hidden">
             <SummonDemo />
           </div>
 
@@ -292,8 +292,8 @@ export default function Hero({ onOpenCommand }) {
             through automated distraction-free monitoring and real-time feedback.
           </p>
 
-          <div data-hero-copy="true" className="mt-9 flex flex-wrap gap-3">
-            <a href="#beta" className="btn btn-primary h-14 px-5">
+          <div data-hero-copy="true" className="mt-9 flex max-w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a href="#beta" className="btn btn-primary h-14 w-full px-5 sm:w-auto">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -317,7 +317,7 @@ export default function Hero({ onOpenCommand }) {
                 <span className="leading-none">Start free</span>
               </span>
             </a>
-            <button type="button" className="btn btn-secondary h-14 px-5" onClick={onOpenCommand}>
+            <button type="button" className="btn btn-secondary h-14 w-full px-5 sm:w-auto" onClick={onOpenCommand}>
               Try live tracking <span className="kbd">⌘K</span>
             </button>
           </div>
@@ -328,7 +328,7 @@ export default function Hero({ onOpenCommand }) {
 
           <div
             data-hero-copy="true"
-            className="mt-9 flex max-w-xl flex-nowrap gap-2 overflow-x-auto text-xs text-[var(--fg-secondary)]"
+            className="mt-9 flex max-w-xl flex-wrap gap-2 text-xs text-[var(--fg-secondary)]"
           >
             <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
               Software & Browsing

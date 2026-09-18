@@ -287,7 +287,8 @@ kbd,
 .container,
 .container-wide,
 .container-grid {
-  width: min(1180px, calc(100vw - 40px));
+  width: min(1180px, calc(100% - 40px));
+  max-width: 100%;
   margin-inline: auto;
 }
 

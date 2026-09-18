@@ -341,8 +341,19 @@
 
 .hero-headline {
   max-width: 100%;
-  display: inline-block;
+  display: block;
   position: relative;
+}
+
+.hero-headline h1 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.hero-stage-mobile {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .hero-underline {
@@ -370,8 +381,12 @@
   perspective: 1600px;
   place-items: center;
   min-height: 560px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   display: grid;
   position: relative;
+  overflow: hidden;
 }
 
 .summon-field {
@@ -1291,7 +1306,7 @@
   backdrop-filter: blur(30px) saturate(1.2);
   border-radius: 14px;
   outline: none;
-  width: min(calc(100vw - 32px), 24rem);
+  width: min(calc(100% - 32px), 24rem);
   animation: 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) mobile-nav-panel-in;
   position: fixed;
   overflow: hidden;
@@ -1431,30 +1446,32 @@
   .summon-stage {
     min-height: 430px;
     margin-top: 1.4rem;
+    overflow: hidden;
   }
   .summon-field {
     border-radius: 22px;
-    inset: 3rem -0.4rem 1rem;
-    transform: rotate(-3deg) translateZ(-80px);
+    inset: 3rem 0 1rem;
+    transform: none;
   }
   .summon-workspace {
     display: none;
   }
   .summon-keystroke {
-    transform-origin: 100% 0;
-    gap: 0.35rem;
-    top: 0;
-    right: 0.6rem;
-    transform: rotate(4deg) scale(0.84);
-  }
-  .summon-keystroke::after {
-    height: 86px;
+    display: none;
   }
   .summon-panel {
     width: 100%;
+    max-width: 100%;
     padding: 0.78rem;
     animation: 0.82s cubic-bezier(0.18, 0.72, 0.16, 1) 0.12s both material-settle;
     transform: none;
+  }
+  .summon-panel-top {
+    flex-wrap: wrap;
+  }
+  .summon-status {
+    max-width: 100%;
+    min-width: 0;
   }
   .summon-row-tag {
     display: none;
@@ -1465,6 +1482,9 @@
   .summon-footer span:last-child {
     width: 100%;
     margin-left: 0;
+  }
+  .summon-context {
+    grid-template-columns: 1fr;
   }
 }
 
