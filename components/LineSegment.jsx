@@ -10,21 +10,34 @@ const SCROLL = {
   packet: { start: "top 72%", end: "bottom 60%" },
 };
 
-function catmullRomPath(points) {
+/** Soft ribbon: vertical spans stay straight; only bends when x must change. */
+function ribbonPath(points) {
   if (points.length < 2) return "";
   let d = `M ${points[0].x} ${points[0].y}`;
   for (let i = 0; i < points.length - 1; i += 1) {
-    const p0 = points[i - 1] ?? points[i];
-    const p1 = points[i];
-    const p2 = points[i + 1];
-    const p3 = points[i + 2] ?? points[i + 1];
-    const cp1x = p1.x + (p2.x - p0.x) / 6;
-    const cp1y = p1.y + (p2.y - p0.y) / 6;
-    const cp2x = p2.x - (p3.x - p1.x) / 6;
-    const cp2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p2.x} ${p2.y}`;
+    const a = points[i];
+    const b = points[i + 1];
+    const dx = b.x - a.x;
+    const dy = b.y - a.y;
+    if (Math.abs(dx) < 6) {
+      d += ` L ${b.x} ${b.y}`;
+      continue;
+    }
+    // Bend late: stay on a.x most of the way, then ease into b.x (no lightning-bolt kink).
+    const pull = Math.abs(dy) * 0.55;
+    const sy = Math.sign(dy) || 1;
+    d += ` C ${a.x} ${a.y + sy * pull} ${b.x} ${b.y - sy * pull} ${b.x} ${b.y}`;
   }
   return d;
+}
+
+function clampX(points, w, pad = 24) {
+  const min = pad;
+  const max = Math.max(pad + 1, w - pad);
+  return points.map((p) => ({
+    x: Math.min(max, Math.max(min, p.x)),
+    y: p.y,
+  }));
 }
 
 function centerIn(el, sectionRect) {
@@ -33,6 +46,25 @@ function centerIn(el, sectionRect) {
     x: r.left - sectionRect.left + r.width / 2,
     y: r.top - sectionRect.top + r.height / 2,
   };
+}
+
+function runnerExit(section, sectionRect, fallbackX) {
+  const runner =
+    section.querySelector(".workflow-runner") ||
+    document.querySelector(".workflow-section .workflow-runner");
+  if (!runner) return { x: fallbackX, y: sectionRect.height - 24 };
+  const r = runner.getBoundingClientRect();
+  return {
+    x: r.left - sectionRect.left + r.width / 2,
+    y: r.bottom - sectionRect.top,
+  };
+}
+
+function seamXFromRunner(sectionRect, fallbackX) {
+  const runner = document.querySelector(".workflow-section .workflow-runner");
+  if (!runner) return fallbackX;
+  const r = runner.getBoundingClientRect();
+  return r.left - sectionRect.left + r.width / 2;
 }
 
 /** Emulate GSAP DrawSVGPlugin with stroke-dashoffset */
@@ -92,39 +124,46 @@ export default function LineSegment({ variant = "workflow" }) {
           const h = rect.height;
           svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
 
+          const fallbackSeam = 0.62 * w;
+          const seamX = seamXFromRunner(rect, fallbackSeam);
           let pts = [];
           if (variant === "workflow") {
             const markers = Array.from(section.querySelectorAll(".workflow-step-marker"));
             if (!markers.length) return;
+            const exit = runnerExit(section, rect, seamX);
+            // Stop at section bottom — no overlap into the next segment.
             pts = [
               { x: 0.14 * w, y: 0 },
               ...markers.map((m) => centerIn(m, rect)),
-              { x: 0.62 * w, y: h },
+              { x: exit.x, y: Math.max(exit.y - 100, exit.y * 0.55) },
+              { x: exit.x, y: exit.y },
+              { x: exit.x, y: h },
             ];
           } else if (variant === "features") {
             const articles = Array.from(section.querySelectorAll(".feature-article"));
             if (!articles.length) return;
-            pts = [{ x: 0.62 * w, y: 0 }];
+            // Start at section top on the same X — no upward stub that double-draws the seam.
+            pts = [{ x: seamX, y: 0 }];
             articles.forEach((article, i) => {
               pts.push({
-                x: 0.5 * w + (i % 2 === 0 ? 1 : -1) * 0.12 * w,
+                x: 0.5 * w + (i % 2 === 0 ? 1 : -1) * 0.08 * w,
                 y: centerIn(article, rect).y,
               });
             });
-            pts.push({ x: 0.62 * w, y: h });
+            pts.push({ x: seamX, y: h });
           } else {
             const source = section.querySelector(".packet-source");
             if (!source) return;
             const s = centerIn(source, rect);
             pts = [
-              { x: 0.62 * w, y: 0 },
-              { x: 0.62 * w, y: 40 },
+              { x: seamX, y: 0 },
+              { x: seamX, y: 40 },
               { x: s.x, y: Math.max(80, s.y - 48) },
               s,
             ];
           }
 
-          const d = catmullRomPath(pts);
+          const d = ribbonPath(clampX(pts, w));
           glow.setAttribute("d", d);
           core.setAttribute("d", d);
           total = core.getTotalLength() || 1;
@@ -208,6 +247,7 @@ export default function LineSegment({ variant = "workflow" }) {
     <svg
       ref={svgRef}
       className="line-thread-svg"
+      overflow="visible"
       aria-hidden="true"
       focusable="false"
     />
