@@ -46,7 +46,7 @@ const TABS = [
   },
 ];
 
-export default function Hero({ onOpenCommand }) {
+export default function Hero() {
   const rootRef = useRef(null);
 
   useEffect(() => {
@@ -317,9 +317,6 @@ export default function Hero({ onOpenCommand }) {
                 <span className="leading-none">Start free</span>
               </span>
             </a>
-            <button type="button" className="btn btn-secondary h-14 w-full px-5 sm:w-auto" onClick={onOpenCommand}>
-              Try live tracking <span className="kbd">⌘K</span>
-            </button>
           </div>
 
           <p data-hero-copy="true" className="mt-5 text-sm text-[var(--fg-tertiary)]">

@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <SiteShell>
       <main>
-        <Hero onOpenCommand={() => window.dispatchEvent(new Event("linea:open-command"))} />
+        <Hero />
         <Workflow />
         <ProductSurfaces />
         <Packet />

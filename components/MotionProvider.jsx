@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import {
   DUR,
   REVEAL_DISTANCE,
@@ -99,18 +98,6 @@ export default function MotionProvider({ children }) {
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         document.documentElement.classList.add("motion-on");
 
-        const lenis = new Lenis({
-          autoRaf: false,
-          lerp: 0.16,
-          wheelMultiplier: 1.12,
-          touchMultiplier: 1.2,
-          smoothWheel: true,
-        });
-        const onTick = (time) => lenis.raf(time * 1000);
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add(onTick);
-        gsap.ticker.lagSmoothing(0);
-
         const onAnchorClick = (e) => {
           if (e.defaultPrevented || e.button !== 0) return;
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -133,17 +120,14 @@ export default function MotionProvider({ children }) {
           if (!target) return;
           e.preventDefault();
           history.pushState(null, "", url.hash);
-          lenis.scrollTo(target);
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
         };
 
         document.addEventListener("click", onAnchorClick, true);
-        // slight delay so section markup is mounted
         requestAnimationFrame(() => initReveals());
 
         return () => {
           document.removeEventListener("click", onAnchorClick, true);
-          gsap.ticker.remove(onTick);
-          lenis.destroy();
           document.documentElement.classList.remove("motion-on");
           ScrollTrigger.getAll().forEach((t) => t.kill());
           document.querySelectorAll("[data-reveal-init]").forEach((el) => {

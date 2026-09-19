@@ -141,7 +141,7 @@ export default function LineSegment({ variant = "workflow" }) {
             trigger: section,
             start: SCROLL[variant].start,
             end: SCROLL[variant].end,
-            scrub: 0.6,
+            scrub: true,
             invalidateOnRefresh: true,
           },
         });
