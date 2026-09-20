@@ -1,5 +1,7 @@
 import Link from "next/link";
+import CommandAtlas from "../../components/CommandAtlas";
 import SiteShell from "../../components/SiteShell";
+import UseCaseIndexCards from "../../components/UseCaseIndexCards";
 import { USE_CASES } from "../../lib/content";
 
 export const metadata = {
@@ -25,7 +27,7 @@ export default function UseCasesPage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/#beta"
-                className="inline-flex h-14 items-center justify-center rounded-[8px] border border-black/10 bg-[var(--indigo-650)] px-5 text-sm font-semibold text-white shadow-[0_18px_34px_-24px_rgba(50,56,159,.9),inset_0_1px_0_rgba(255,255,255,.2)] transition hover:-translate-y-0.5 hover:bg-[var(--indigo-500)]"
+                className="inline-flex h-14 items-center justify-center rounded-[8px] border border-black/10 bg-[linear-gradient(#2bb89a,#16a085)] px-5 text-sm font-semibold text-white shadow-[0_18px_34px_-24px_rgba(22,160,133,.9),inset_0_1px_0_rgba(255,255,255,.2)] transition hover:-translate-y-0.5 hover:brightness-105"
               >
                 3 users free forever!
               </Link>
@@ -38,67 +40,10 @@ export default function UseCasesPage() {
             </div>
           </div>
 
-          <figure
-            className="command-atlas-stage"
-            aria-label="Talon productivity atlas connecting five workforce workflows"
-          >
-            <div className="atlas-scan" aria-hidden="true" />
-            <div className="atlas-core">
-              <span className="atlas-mark">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
-                </svg>
-              </span>
-              <strong>Talon Productivity Atlas</strong>
-              <p>Track, report, bill & protect.</p>
-              <div className="atlas-hotkey" aria-hidden="true">
-                <span>⌃</span>
-                <span>⌥</span>
-                <span>L</span>
-              </div>
-            </div>
-            <div className="atlas-orbit" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="atlas-node-grid">
-              {USE_CASES.map((item) => (
-                <Link
-                  key={item.slug}
-                  href={`/use-cases/${item.slug}`}
-                  className={`atlas-node atlas-node-${item.node}`}
-                >
-                  <span>{item.n}</span>
-                  <strong>{item.keyword}</strong>
-                  <em>{item.atlas}</em>
-                </Link>
-              ))}
-            </div>
-          </figure>
+          <CommandAtlas items={USE_CASES} />
         </section>
 
-        <section className="container use-case-index-grid" data-reveal-stagger="true">
-          {USE_CASES.map((item) => (
-            <Link
-              key={item.slug}
-              href={`/use-cases/${item.slug}`}
-              className="use-case-index-card"
-            >
-              <span className="use-case-index-number">{item.n}</span>
-              <span className="pill">{item.cardTitle}</span>
-              <h2>{item.keyword}</h2>
-              <p>{item.summary}</p>
-              <em>
-                Open page
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </em>
-            </Link>
-          ))}
-        </section>
+        <UseCaseIndexCards items={USE_CASES} />
       </main>
     </SiteShell>
   );

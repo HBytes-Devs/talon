@@ -5,8 +5,10 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CommandPalette from "./CommandPalette";
 import MotionProvider from "./MotionProvider";
+import { LocaleProvider, useLocale } from "./LocaleProvider";
 
-export default function SiteShell({ children }) {
+function ShellInner({ children }) {
+  const { t } = useLocale();
   const [cmdOpen, setCmdOpen] = useState(false);
   const closeCmd = useCallback(() => setCmdOpen(false), []);
 
@@ -32,12 +34,20 @@ export default function SiteShell({ children }) {
         href="#top"
         className="skip-link sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:m-0 focus:h-auto focus:w-auto focus:overflow-visible focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
       >
-        Skip to content
+        {t.skipToContent}
       </a>
       <Header />
       {children}
       <Footer />
       <CommandPalette open={cmdOpen} onClose={closeCmd} />
     </MotionProvider>
+  );
+}
+
+export default function SiteShell({ children }) {
+  return (
+    <LocaleProvider>
+      <ShellInner>{children}</ShellInner>
+    </LocaleProvider>
   );
 }

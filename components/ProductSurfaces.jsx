@@ -1,4 +1,7 @@
+"use client";
+
 import LineSegment from "./LineSegment";
+import { useLocale } from "./LocaleProvider";
 
 const BLUEPRINTS = [
   { title: "Aisha Khan", tag: "working", body: "Figma · 2h 14m productive" },
@@ -16,39 +19,37 @@ const VERSIONS = [
 ];
 
 export default function ProductSurfaces() {
+  const { t } = useLocale();
+  const p = t.product;
+  const tagChips = [p.tagWork, p.tagIdle, p.tagMeeting];
+  const actionChips = [p.open, p.timeline, p.report];
+  const mixActions = [p.timeline, p.report, p.export];
+
   return (
     <section id="product" className="line-host scroll-anchor section-pad">
       <LineSegment variant="features" />
       <div className="container-grid space-y-20">
         <div data-reveal="true">
-          <span className="pill">Why Talon?</span>
+          <span className="pill">{p.whyPill}</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">
-            Learn how Talon improves productivity in your business.
+            {p.title}
           </h2>
         </div>
 
         {/* Blueprint Library */}
         <article className="feature-article grid items-center gap-8 lg:grid-cols-2">
           <div data-reveal="true">
-            <span className="pill">Live Tracking</span>
+            <span className="pill">{p.livePill}</span>
             <h3 className="display-type mt-5 max-w-xl text-balance text-3xl font-bold md:text-4xl">
-              Live stream & screenshots of the workday.
+              {p.liveTitle}
             </h3>
-            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">
-              Get a real-time overview of your team&apos;s workday — all in one place. Talon
-              displays the most recent screenshots along with each employee&apos;s current status
-              (Working, Idle, In a Meeting, or on Break).
-            </p>
+            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">{p.liveBody}</p>
             <ul className="mt-6 space-y-3 text-[var(--fg-secondary)]">
-              <li className="flex gap-3">
-                <Bullet /> Periodic screenshot monitoring with adjustable blur.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> Live status refresh without switching screens.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> Quick View: productive, distraction, idle, meetings & breaks.
-              </li>
+              {p.liveBullets.map((item, i) => (
+                <li key={i} className="flex gap-3">
+                  <Bullet /> {item}
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -57,14 +58,14 @@ export default function ProductSurfaces() {
               <span className="traffic traffic-red" />
               <span className="traffic traffic-amber" />
               <span className="traffic traffic-green" />
-              <span className="ml-2 font-semibold text-[var(--fg-primary)]">Live Activity</span>
+              <span className="ml-2 font-semibold text-[var(--fg-primary)]">{p.liveActivity}</span>
               <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.12em]">
-                live · idle · reports
+                {p.liveIdleReports}
               </span>
             </div>
             <div className="grid md:grid-cols-[160px_1fr]">
               <aside className="hidden border-r border-[var(--border-subtle)] p-3 text-sm md:block">
-                {["Live Activity", "Focus Timeline", "Reports"].map((item, i) => (
+                {p.liveNav.map((item, i) => (
                   <div
                     key={item}
                     className={`rounded-[8px] px-3 py-2 ${
@@ -76,15 +77,15 @@ export default function ProductSurfaces() {
                 ))}
                 <div className="mt-4 px-3">
                   <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
-                    Tags
+                    {p.tags}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-1.5">
-                    {["Work", "Idle", "Meeting"].map((t) => (
+                    {tagChips.map((label) => (
                       <span
-                        key={t}
+                        key={label}
                         className="rounded-full border border-[var(--border-subtle)] bg-[var(--surface-2)] px-2 py-0.5 text-[11px]"
                       >
-                        {t}
+                        {label}
                       </span>
                     ))}
                   </div>
@@ -92,7 +93,7 @@ export default function ProductSurfaces() {
               </aside>
               <div className="p-3">
                 <div className="mb-3 flex items-center gap-2 rounded-[10px] border border-[var(--border-subtle)] bg-[var(--surface-1)] px-3 py-2">
-                  <span className="text-sm text-[var(--fg-tertiary)]">Search team…</span>
+                  <span className="text-sm text-[var(--fg-tertiary)]">{p.searchTeam}</span>
                   <span className="ml-auto kbd-chip">esc</span>
                 </div>
                 <div className="space-y-2">
@@ -116,13 +117,13 @@ export default function ProductSurfaces() {
                   ))}
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[var(--border-subtle)] pt-3 text-[11px] text-[var(--fg-secondary)]">
-                  <span>22 present</span>
+                  <span>{p.present}</span>
                   <span>·</span>
-                  <span>2 idle</span>
+                  <span>{p.idle}</span>
                   <span>·</span>
-                  <span>Blur on</span>
+                  <span>{p.blurOn}</span>
                   <div className="ml-auto flex gap-2">
-                    {["Open", "Timeline", "Report"].map((a) => (
+                    {actionChips.map((a) => (
                       <span
                         key={a}
                         className="rounded-[8px] border border-[var(--border-subtle)] bg-[var(--surface-strong)] px-2.5 py-1 font-semibold"
@@ -142,13 +143,13 @@ export default function ProductSurfaces() {
           <div className="order-2 lg:order-1">
             <div className="magnetic-panel p-4">
               <div className="mb-4 flex items-center justify-between text-sm">
-                <span className="font-semibold">Software & Browsing Activity</span>
+                <span className="font-semibold">{p.softwareActivity}</span>
                 <span className="rounded-[8px] bg-[var(--ink-950)] px-2.5 py-1 text-xs font-semibold text-white">
-                  Live
+                  {p.liveBadge}
                 </span>
               </div>
               <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
-                Top activity
+                {p.topActivity}
               </p>
               <div className="mt-2 space-y-2">
                 {["Figma", "Chrome", "VS Code"].map((f) => (
@@ -162,7 +163,7 @@ export default function ProductSurfaces() {
                 ))}
               </div>
               <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
-                Time by client
+                {p.timeByClient}
               </p>
               <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                 {[
@@ -181,13 +182,10 @@ export default function ProductSurfaces() {
               </div>
               <div className="mt-4 rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-1)] p-3">
                 <div className="flex items-center justify-between text-sm">
-                  <strong>Know where time & efforts are spent</strong>
-                  <span className="text-xs text-[var(--fg-tertiary)]">Per client / project</span>
+                  <strong>{p.knowWhereTitle}</strong>
+                  <span className="text-xs text-[var(--fg-tertiary)]">{p.knowWhereMeta}</span>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-[var(--fg-secondary)]">
-                  When an employee is working on multiple projects or clients, Talon captures the
-                  time spent on each task. Meetings are also accounted for in the report.
-                </p>
+                <p className="mt-2 text-sm leading-6 text-[var(--fg-secondary)]">{p.knowWhereBody}</p>
                 <div className="mt-3 flex gap-3 font-mono text-[11px] text-[var(--fg-tertiary)]">
                   <span>3 apps</span>
                   <span>4 clients</span>
@@ -197,25 +195,17 @@ export default function ProductSurfaces() {
             </div>
           </div>
           <div className="order-1 lg:order-2">
-            <span className="pill">Software & Browsing</span>
+            <span className="pill">{p.softwarePill}</span>
             <h3 className="display-type mt-5 max-w-xl text-balance text-3xl font-bold md:text-4xl">
-              Know where the time & efforts are spent.
+              {p.softwareTitle}
             </h3>
-            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">
-              When an employee is working on multiple projects or clients, our system can
-              intelligently capture the time spent on each of the different tasks. Meetings are also
-              accounted for in their report.
-            </p>
+            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">{p.softwareBody}</p>
             <ul className="mt-6 space-y-3 text-[var(--fg-secondary)]">
-              <li className="flex gap-3">
-                <Bullet /> App & browsing activity, classified as productive or distraction.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> Time per client, project & task — automatically.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> Trainable ML that learns your company&apos;s productive work.
-              </li>
+              {p.softwareBullets.map((item, i) => (
+                <li key={i} className="flex gap-3">
+                  <Bullet /> {item}
+                </li>
+              ))}
             </ul>
           </div>
         </article>
@@ -223,31 +213,23 @@ export default function ProductSurfaces() {
         {/* Time Machine */}
         <article className="feature-article grid items-center gap-8 lg:grid-cols-2">
           <div>
-            <span className="pill">Focus Timeline</span>
+            <span className="pill">{p.focusPill}</span>
             <h3 className="display-type mt-5 max-w-xl text-balance text-3xl font-bold md:text-4xl">
-              Work, idle, meeting & break — hour by hour.
+              {p.focusTitle}
             </h3>
-            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">
-              Get a crystal-clear view of each employee&apos;s workday. The Focus Timeline presents
-              a detailed, color-coded graph so you can track activity patterns and make informed
-              decisions.
-            </p>
+            <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">{p.focusBody}</p>
             <ul className="mt-6 space-y-3 text-[var(--fg-secondary)]">
-              <li className="flex gap-3">
-                <Bullet /> Idle detection from keyboard & mouse.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> One-click break & meeting logging.
-              </li>
-              <li className="flex gap-3">
-                <Bullet /> Granular reports for admins & managers.
-              </li>
+              {p.focusBullets.map((item, i) => (
+                <li key={i} className="flex gap-3">
+                  <Bullet /> {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="magnetic-panel p-4">
             <div className="mb-4 flex items-center justify-between">
-              <strong>Focus Timeline</strong>
+              <strong>{p.focusTimeline}</strong>
               <span className="text-sm text-[var(--fg-secondary)]">Aisha Khan</span>
             </div>
             <div className="tm-scrub" aria-hidden="true">
@@ -271,20 +253,13 @@ export default function ProductSurfaces() {
             </div>
             <div className="diff-live mt-4 rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-1)] p-3">
               <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
-                Today&apos;s mix
+                {p.todaysMix}
               </p>
-              <p className="mt-2 text-sm text-[var(--fg-success)]">
-                + 6h 12m work · 1h 20m meetings
-              </p>
-              <p className="mt-1 text-sm text-[var(--fg-danger)]">
-                − 48m idle · 40m break
-              </p>
-              <p className="mt-3 text-sm leading-6 text-[var(--fg-secondary)]">
-                Our dashboard accurately depicts time spent working on tasks, meetings, idle,
-                distracted, and breaks — with different metrics.
-              </p>
+              <p className="mt-2 text-sm text-[var(--fg-success)]">{p.mixPos}</p>
+              <p className="mt-1 text-sm text-[var(--fg-danger)]">{p.mixNeg}</p>
+              <p className="mt-3 text-sm leading-6 text-[var(--fg-secondary)]">{p.mixBody}</p>
               <div className="mt-3 flex flex-wrap gap-2">
-                {["Timeline", "Report", "Export"].map((a) => (
+                {mixActions.map((a) => (
                   <span
                     key={a}
                     className="rounded-[8px] border border-[var(--border-subtle)] bg-[var(--surface-strong)] px-2.5 py-1 text-xs font-semibold"

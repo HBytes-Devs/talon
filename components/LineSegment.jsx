@@ -5,9 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const SCROLL = {
-  workflow: { start: "top 78%", end: "bottom 58%" },
-  features: { start: "top 80%", end: "bottom 55%" },
-  packet: { start: "top 72%", end: "bottom 60%" },
+  workflow: { start: "top 78%", end: "bottom 42%" },
+  features: { start: "top 82%", end: "bottom 42%" },
+  packet: { start: "top 88%", end: "bottom 55%" },
 };
 
 /** Soft ribbon: vertical spans stay straight; only bends when x must change. */
@@ -126,39 +126,41 @@ export default function LineSegment({ variant = "workflow" }) {
 
           const fallbackSeam = 0.62 * w;
           const seamX = seamXFromRunner(rect, fallbackSeam);
+          const SEAM = 64; // overlap so adjacent SVGs meet as one continuous stroke
           let pts = [];
           if (variant === "workflow") {
             const markers = Array.from(section.querySelectorAll(".workflow-step-marker"));
             if (!markers.length) return;
             const exit = runnerExit(section, rect, seamX);
-            // Stop at section bottom — no overlap into the next segment.
             pts = [
               { x: 0.14 * w, y: 0 },
               ...markers.map((m) => centerIn(m, rect)),
               { x: exit.x, y: Math.max(exit.y - 100, exit.y * 0.55) },
               { x: exit.x, y: exit.y },
-              { x: exit.x, y: h },
+              { x: exit.x, y: h + SEAM },
             ];
           } else if (variant === "features") {
             const articles = Array.from(section.querySelectorAll(".feature-article"));
             if (!articles.length) return;
-            // Start at section top on the same X — no upward stub that double-draws the seam.
-            pts = [{ x: seamX, y: 0 }];
+            pts = [{ x: seamX, y: -SEAM }];
             articles.forEach((article, i) => {
               pts.push({
                 x: 0.5 * w + (i % 2 === 0 ? 1 : -1) * 0.08 * w,
                 y: centerIn(article, rect).y,
               });
             });
-            pts.push({ x: seamX, y: h });
+            // Finish with a straight vertical drop so the packet segment can meet cleanly.
+            pts.push({ x: seamX, y: Math.max(h - 96, h * 0.72) });
+            pts.push({ x: seamX, y: h + SEAM });
           } else {
             const source = section.querySelector(".packet-source");
             if (!source) return;
             const s = centerIn(source, rect);
+            // Enter on the same vertical as features exit, then ease toward the card.
             pts = [
-              { x: seamX, y: 0 },
-              { x: seamX, y: 40 },
-              { x: s.x, y: Math.max(80, s.y - 48) },
+              { x: seamX, y: -SEAM },
+              { x: seamX, y: Math.min(s.y - 24, Math.max(120, h * 0.22)) },
+              { x: s.x, y: Math.max(s.y - 12, Math.min(s.y, h * 0.35)) },
               s,
             ];
           }

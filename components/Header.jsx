@@ -4,14 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import LogoMark from "./LogoMark";
+import LanguageToggle from "./LanguageToggle";
+import ThemeToggle from "./ThemeToggle";
+import { useLocale } from "./LocaleProvider";
 
 const NAV = [
-  { href: "/#product", label: "Features" },
-  { href: "/#workflow", label: "How it works" },
-  { href: "/use-cases", label: "Use cases" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
-  { href: "/#faq", label: "FAQ" },
+  { href: "/#product", key: "features" },
+  { href: "/#workflow", key: "workflow" },
+  { href: "/use-cases", key: "useCases" },
+  { href: "/#pricing", key: "pricing" },
+  { href: "/blog", key: "blog" },
+  { href: "/#faq", key: "faq" },
 ];
 
 const linkClass =
@@ -19,6 +22,7 @@ const linkClass =
 
 export default function Header() {
   const pathname = usePathname();
+  const { t } = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -63,7 +67,7 @@ export default function Header() {
 
         <button
           className="inline-flex size-9 shrink-0 items-center justify-center rounded-[8px] text-[var(--fg-secondary)] transition hover:bg-[var(--bg-card)] hover:text-[var(--fg-primary)] navdesk:hidden"
-          aria-label="Open navigation menu"
+          aria-label={t.openMenu}
           type="button"
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
@@ -100,7 +104,7 @@ export default function Header() {
                 href={item.href}
                 className={`${linkClass} ${active ? "bg-[var(--surface-2)] text-[var(--fg-primary)]" : ""}`}
               >
-                {item.label}
+                {t.nav[item.key]}
               </Link>
             );
           })}
@@ -110,16 +114,21 @@ export default function Header() {
           href="/#beta"
           className="btn btn-primary ml-1 !hidden h-9 shrink-0 px-3 navdesk:!inline-flex"
         >
-          Sign in
+          {t.signIn}
         </Link>
       </nav>
+
+      <div className="header-utilities pointer-events-auto">
+        <LanguageToggle />
+        <ThemeToggle />
+      </div>
 
       {menuOpen ? (
         <>
           <button
             type="button"
             className="mobile-nav-overlay pointer-events-auto"
-            aria-label="Close navigation menu"
+            aria-label={t.closeMenu}
             onClick={() => setMenuOpen(false)}
           />
           <div className="mobile-nav-panel pointer-events-auto p-2" data-mobile-nav-links="true">
@@ -130,7 +139,7 @@ export default function Header() {
                 className="block rounded-[10px] px-3 py-2.5 text-base font-normal text-[var(--fg-secondary)] transition hover:bg-[var(--surface-2)] hover:text-[var(--fg-primary)]"
                 onClick={() => setMenuOpen(false)}
               >
-                {item.label}
+                {t.nav[item.key]}
               </Link>
             ))}
             <div className="mt-1 flex items-center gap-2 border-t border-[var(--border-subtle)] p-2">
@@ -139,7 +148,7 @@ export default function Header() {
                 className="btn btn-primary h-9 flex-1 px-3"
                 onClick={() => setMenuOpen(false)}
               >
-                Sign in
+                {t.signIn}
               </Link>
             </div>
           </div>

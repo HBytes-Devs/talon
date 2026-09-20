@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { DUR, STAGGER } from "../lib/motion";
+import { DUR } from "../lib/motion";
+import { useLocale } from "./LocaleProvider";
 
-const TABS = [
+const TAB_DEFS = [
   {
     id: "live",
-    label: "Live",
+    labelKey: "tabLive",
     query: "aisha",
     chips: ["Working", "Idle 18m", "Screenshot"],
     footer: "Live tracking · non-intrusive",
@@ -20,7 +21,7 @@ const TABS = [
   },
   {
     id: "idle",
-    label: "Idle",
+    labelKey: "tabIdle",
     query: "idle",
     chips: ["2 idle", "18m avg", "Alert"],
     footer: "Idle alerts · keyboard & mouse",
@@ -33,7 +34,7 @@ const TABS = [
   },
   {
     id: "reports",
-    label: "Reports",
+    labelKey: "tabReports",
     query: "acme",
     chips: ["164h", "12h idle", "Export"],
     footer: "Per client · project · task",
@@ -48,6 +49,8 @@ const TABS = [
 
 export default function Hero() {
   const rootRef = useRef(null);
+  const { locale, t } = useLocale();
+  const h = t.hero;
 
   useEffect(() => {
     const root = rootRef.current;
@@ -61,14 +64,12 @@ export default function Hero() {
 
     const boot = async () => {
       let frostEase = "power2.out";
-      let settleEase = "power2.out";
       try {
         const { CustomEase } = await import("gsap/CustomEase");
         gsap.registerPlugin(CustomEase);
         try { CustomEase.create("frost", "0.2, 0.72, 0.2, 1"); } catch {}
         try { CustomEase.create("frostSettle", "0.18, 0.72, 0.16, 1"); } catch {}
         frostEase = "frost";
-        settleEase = "frostSettle";
       } catch {
         /* free fallback */
       }
@@ -82,7 +83,6 @@ export default function Hero() {
           gsap.set(
             [
               headline,
-              ".hero-stage .summon-keystroke span",
               ".hero-stage .summon-panel",
               ".hero-stage .summon-workspaces",
               ".hero-copy [data-hero-badge]",
@@ -97,31 +97,7 @@ export default function Hero() {
               defaults: { ease: frostEase },
             });
 
-            tl.fromTo(
-              ".hero-stage .summon-keystroke span",
-              { autoAlpha: 0, y: -6 },
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.34,
-                ease: settleEase,
-                stagger: STAGGER.tight,
-              }
-            );
-            tl.addLabel("press", ">-0.02");
-            tl.to(
-              ".hero-stage .summon-keystroke span:last-child",
-              {
-                scale: 0.94,
-                duration: 0.06,
-                ease: "power2.in",
-                yoyo: true,
-                repeat: 1,
-                transformOrigin: "50% 50%",
-              },
-              "press"
-            );
-            tl.addLabel("summon", "press+=0.02");
+            tl.addLabel("summon", 0);
             tl.fromTo(
               ".hero-stage .summon-panel",
               { autoAlpha: 0, y: 14, scale: 0.965, rotation: -2.6 },
@@ -238,10 +214,10 @@ export default function Hero() {
       killed = true;
       mm.revert();
     };
-  }, []);
+  }, [locale]);
 
   return (
-    <div className="hero-intro contents" ref={rootRef}>
+    <div className="hero-intro contents" ref={rootRef} key={locale}>
       <section
         className="hero-section container-grid grid min-h-[760px] min-w-0 items-center gap-12 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pt-24"
         id="top"
@@ -252,13 +228,13 @@ export default function Hero() {
             className="mb-7 inline-flex max-w-full flex-wrap items-center gap-3 rounded-[10px] border border-[var(--border-subtle)] bg-[var(--surface-1)] px-3 py-2 text-sm font-medium text-[var(--fg-secondary)] shadow-[var(--shadow-card)] backdrop-blur-xl"
           >
             <span className="inline-block size-2 shrink-0 rounded-full bg-[var(--success)] shadow-[0_0_14px_var(--success-glow)]" />
-            Workforce productivity insights
-            <span className="kbd">3 free</span>
+            {h.badge}
+            <span className="kbd">{h.freeBadge}</span>
           </div>
 
           <div className="hero-headline">
             <h1 className="display-type max-w-full text-balance text-[2.15rem] font-bold leading-[1.05] text-[var(--fg-primary)] sm:max-w-[10.8ch] sm:text-6xl sm:leading-[0.96] lg:text-7xl">
-              Win back productivity & profits affected by distractions.
+              {h.headline}
             </h1>
             <svg
               aria-hidden="true"
@@ -287,9 +263,7 @@ export default function Hero() {
             data-hero-copy="true"
             className="mt-7 max-w-xl text-pretty text-xl leading-8 text-[var(--fg-secondary)]"
           >
-            Managers&apos; time is expensive! Track your team&apos;s productivity without losing
-            yours. Talon helps businesses boost employee productivity and improve time tracking
-            through automated distraction-free monitoring and real-time feedback.
+            {h.body}
           </p>
 
           <div data-hero-copy="true" className="mt-9 flex max-w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -312,15 +286,15 @@ export default function Hero() {
               </svg>
               <span className="flex flex-col justify-center gap-1 leading-none">
                 <span className="text-[10px] font-normal uppercase tracking-[0.12em] opacity-75 leading-none">
-                  3 users free forever
+                  {h.ctaEyebrow}
                 </span>
-                <span className="leading-none">Start free</span>
+                <span className="leading-none">{h.cta}</span>
               </span>
             </a>
           </div>
 
           <p data-hero-copy="true" className="mt-5 text-sm text-[var(--fg-tertiary)]">
-            No credit card. Simple & easy to use. Windows, Mac & mobile.
+            {h.footnote}
           </p>
 
           <div
@@ -328,20 +302,20 @@ export default function Hero() {
             className="mt-9 flex max-w-xl flex-wrap gap-2 text-xs text-[var(--fg-secondary)]"
           >
             <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-              Software & Browsing
+              {h.chipSoftware}
             </div>
             <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-              Live stream & Screenshots
+              {h.chipLive}
             </div>
             <div className="shrink-0 whitespace-nowrap rounded-[9px] border border-[var(--border-subtle)] bg-[var(--surface-3)] px-3 py-2">
-              Time & Attendance
+              {h.chipTime}
             </div>
           </div>
         </div>
 
         <div
           className="hero-stage relative hidden min-w-0 sm:block"
-          aria-label="Talon live tracking dashboard for the current team"
+          aria-label={h.stageAria}
         >
           <SummonDemo />
         </div>
@@ -351,8 +325,14 @@ export default function Hero() {
 }
 
 function SummonDemo() {
+  const { t } = useLocale();
+  const h = t.hero;
   const [tabId, setTabId] = useState("live");
-  const tab = TABS.find((t) => t.id === tabId) ?? TABS[0];
+  const tabs = TAB_DEFS.map((def) => ({
+    ...def,
+    label: h[def.labelKey],
+  }));
+  const tab = tabs.find((item) => item.id === tabId) ?? tabs[0];
 
   return (
     <div className="summon-stage">
@@ -379,12 +359,6 @@ function SummonDemo() {
         ))}
       </div>
 
-      <div className="summon-keystroke" aria-hidden="true">
-        <span>⌃</span>
-        <span>⌥</span>
-        <span>L</span>
-      </div>
-
       <div className="summon-panel magnetic-panel">
         <div className="surface-sweep" aria-hidden="true" />
         <div className="summon-panel-top">
@@ -404,9 +378,8 @@ function SummonDemo() {
             >
               <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
             </svg>
-            Native tracking · non-intrusive
+            {h.nativeTracking}
           </span>
-          <span className="kbd">⌃⌥L</span>
         </div>
 
         <div className="summon-search">
@@ -434,7 +407,7 @@ function SummonDemo() {
         </div>
 
         <div className="summon-toolbar" aria-hidden="true">
-          {TABS.map((item) => (
+          {tabs.map((item) => (
             <button
               key={item.id}
               type="button"
@@ -467,10 +440,10 @@ function SummonDemo() {
 
         <div className="summon-footer">
           <span>
-            <span className="kbd">↑↓</span> navigate
+            <span className="kbd">↑↓</span> {h.navigate}
           </span>
           <span>
-            <span className="kbd">↵</span> open
+            <span className="kbd">↵</span> {h.open}
           </span>
           <span>{tab.footer}</span>
         </div>

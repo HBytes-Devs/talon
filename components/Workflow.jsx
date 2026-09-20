@@ -1,33 +1,16 @@
-import LineSegment from "./LineSegment";
+"use client";
 
-const STEPS = [
-  {
-    n: "01",
-    title: "Install",
-    tag: "client",
-    body: "Download and install the client app on employee work devices. Windows, Mac & mobile.",
-  },
-  {
-    n: "02",
-    title: "Start",
-    tag: "workday",
-    body: "Employees click Start at the beginning of the workday. Hours log automatically — no manual timesheets.",
-  },
-  {
-    n: "03",
-    title: "Track",
-    tag: "activity",
-    body: "Screenshots, app activity, idle, meetings & breaks are captured. Field teams sync location & site visits.",
-  },
-  {
-    n: "04",
-    title: "Review",
-    tag: "reports",
-    body: "Managers see live status, Focus Timeline, and granular reports — without spending their own day watching screens.",
-  },
-];
+import LineSegment from "./LineSegment";
+import { useLocale } from "./LocaleProvider";
 
 export default function Workflow() {
+  const { t } = useLocale();
+  const w = t.workflow;
+  const steps = w.steps.map((step, i) => ({
+    ...step,
+    n: String(i + 1).padStart(2, "0"),
+  }));
+
   return (
     <section
       id="workflow"
@@ -36,38 +19,29 @@ export default function Workflow() {
       <LineSegment variant="workflow" />
       <div className="container-grid grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
         <div className="max-w-xl" data-reveal="true">
-          <span className="pill">How it works</span>
+          <span className="pill">{w.pill}</span>
           <h2 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">
-            Track your team&apos;s productivity without losing yours.
+            {w.title}
           </h2>
-          <p className="mt-5 text-lg leading-8 text-[var(--fg-secondary)]">
-            Managers&apos; time is expensive! Talon automates distraction-free monitoring and
-            real-time feedback so you know where time & efforts are spent.
-          </p>
-          <div className="workflow-hotkey mt-8 inline-flex items-center gap-2">
-            <span>3</span>
-            <span>free</span>
-            <span>∞</span>
-            <strong>users forever</strong>
-          </div>
+          <p className="mt-5 text-lg leading-8 text-[var(--fg-secondary)]">{w.body}</p>
         </div>
 
         <div className="workflow-runner frost-panel p-3" data-reveal="true" data-reveal-delay="0.12">
           <div className="workflow-runner-head">
             <div>
               <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
-                live tracking
+                {w.liveTracking}
               </span>
-              <h3 className="mt-1 text-lg font-bold">Team dashboard</h3>
-              <p className="mt-1 text-sm text-[var(--fg-secondary)]">22 present · 2 idle</p>
+              <h3 className="mt-1 text-lg font-bold">{w.teamDash}</h3>
+              <p className="mt-1 text-sm text-[var(--fg-secondary)]">{w.presentIdle}</p>
             </div>
             <span className="rounded-full border border-[var(--border-success)] bg-[var(--surface-success)] px-2.5 py-1 text-[11px] font-semibold text-[var(--fg-success)]">
-              Live
+              {w.live}
             </span>
           </div>
 
           <div className="workflow-lane" data-reveal-stagger="true">
-            {STEPS.map((step) => (
+            {steps.map((step) => (
               <div key={step.n} className="workflow-step">
                 <div className="workflow-step-marker">
                   <span>{step.n}</span>
@@ -87,12 +61,9 @@ export default function Workflow() {
 
           <div className="mt-3 rounded-[12px] border border-[var(--border-subtle)] bg-[var(--surface-1)] p-4">
             <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--fg-tertiary)]">
-              Today&apos;s snapshot
+              {w.snapshotLabel}
             </p>
-            <p className="mt-2 text-sm leading-6 text-[var(--fg-primary)]">
-              164h logged · 12h idle · 18h meetings · 6h breaks. Time spent per client is already in
-              the report.
-            </p>
+            <p className="mt-2 text-sm leading-6 text-[var(--fg-primary)]">{w.snapshotBody}</p>
           </div>
         </div>
       </div>
