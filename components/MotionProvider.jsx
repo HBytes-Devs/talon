@@ -16,6 +16,7 @@ let settleEase = "power2.out";
 
 async function registerGsap() {
   if (registered || typeof window === "undefined") return;
+  registered = true;
   gsap.registerPlugin(ScrollTrigger);
   try {
     const { CustomEase } = await import("gsap/CustomEase");
@@ -28,7 +29,6 @@ async function registerGsap() {
     frostEase = "power2.out";
     settleEase = "power2.out";
   }
-  registered = true;
 }
 
 function revealProps(type) {
@@ -53,11 +53,19 @@ function initReveals() {
       duration: DUR.reveal,
       ease: frostEase,
       delay: parseFloat(el.dataset.revealDelay || "0") || 0,
-      clearProps: "transform",
+      immediateRender: false,
+      clearProps: "opacity,visibility,transform",
+      onStart() {
+        el.style.willChange = "transform, opacity";
+      },
+      onComplete() {
+        el.style.willChange = "auto";
+      },
       scrollTrigger: {
         trigger: el,
         start: REVEAL_START,
         once: true,
+        toggleActions: "play none none none",
       },
     });
   });
@@ -65,20 +73,36 @@ function initReveals() {
   gsap.utils.toArray("[data-reveal-stagger]").forEach((el) => {
     if (el.dataset.revealInit || el.children.length === 0) return;
     el.dataset.revealInit = "1";
-    gsap.from(el.children, {
+    const kids = Array.from(el.children);
+    gsap.from(kids, {
       autoAlpha: 0,
       y: REVEAL_DISTANCE,
       duration: DUR.reveal,
       ease: frostEase,
       stagger: STAGGER.base,
-      clearProps: "transform",
+      immediateRender: false,
+      clearProps: "opacity,visibility,transform",
+      onStart() {
+        kids.forEach((child) => {
+          child.style.willChange = "transform, opacity";
+        });
+      },
+      onComplete() {
+        kids.forEach((child) => {
+          child.style.willChange = "auto";
+        });
+      },
       scrollTrigger: {
         trigger: el,
         start: REVEAL_START,
         once: true,
+        toggleActions: "play none none none",
       },
     });
   });
+
+  // Layout may settle after first paint (fonts/images) — refresh triggers
+  requestAnimationFrame(() => ScrollTrigger.refresh());
 }
 
 export function getMotionEases() {
@@ -124,9 +148,27 @@ export default function MotionProvider({ children }) {
         };
 
         document.addEventListener("click", onAnchorClick, true);
-        requestAnimationFrame(() => initReveals());
+        let revealRaf = requestAnimationFrame(() => {
+          revealRaf = 0;
+          if (!cancelled) initReveals();
+        });
+
+        // Absolute failsafe: never leave content stuck at autoAlpha 0
+        const stuckFix = window.setTimeout(() => {
+          document.querySelectorAll("[data-reveal], [data-reveal-stagger] > *").forEach((el) => {
+            const op = window.getComputedStyle(el).opacity;
+            const vis = window.getComputedStyle(el).visibility;
+            if (op === "0" || vis === "hidden") {
+              gsap.set(el, { clearProps: "opacity,visibility,transform" });
+              el.style.willChange = "auto";
+            }
+          });
+          ScrollTrigger.refresh();
+        }, 900);
 
         return () => {
+          if (revealRaf) cancelAnimationFrame(revealRaf);
+          window.clearTimeout(stuckFix);
           document.removeEventListener("click", onAnchorClick, true);
           document.documentElement.classList.remove("motion-on");
           ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -134,7 +176,7 @@ export default function MotionProvider({ children }) {
             delete el.dataset.revealInit;
           });
           gsap.set("[data-reveal], [data-reveal-stagger] > *", {
-            clearProps: "opacity,visibility,transform",
+            clearProps: "opacity,visibility,transform,will-change",
           });
         };
       });

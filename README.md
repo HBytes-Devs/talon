@@ -1,6 +1,6 @@
-﻿# Talon
+﻿# HawkLens
 
-**Talon** is HawkBytes’ workforce productivity insights platform — ML-based employee productivity and time tracking.
+**HawkLens** is HawkBytes’ workforce productivity insights platform — ML-based employee productivity and time tracking.
 
 Win back productivity & profits affected by distractions. Track your team without losing yours.
 
@@ -14,7 +14,7 @@ Win back productivity & profits affected by distractions. Track your team withou
 - Screenshot blur, ECC encryption, non-intrusive monitoring
 - **3 users free forever** · Premium from **$3.99 / user / month**
 
-Website: Next.js + Tailwind. Brand: **Talon by HawkBytes**.
+Website: Next.js + Tailwind. Brand: **HawkLens by HawkBytes**.
 
 ## Run locally
 

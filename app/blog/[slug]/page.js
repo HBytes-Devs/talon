@@ -10,9 +10,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
-  if (!post) return { title: "Blog - Talon" };
+  if (!post) return { title: "Blog - HawkLens" };
   return {
-    title: `${post.title} - Talon`,
+    title: `${post.title} - HawkLens`,
     description: post.blurb,
   };
 }
@@ -60,10 +60,10 @@ export default async function BlogPostPage({ params }) {
 
         <div className="container mt-16 max-w-2xl">
           <div className="magnetic-panel p-6 md:p-8">
-            <p className="font-semibold">Talon</p>
+            <p className="font-semibold">HawkLens</p>
             <h2 className="display-type mt-3 text-3xl font-bold">Win back productivity & profits affected by distractions.</h2>
             <p className="mt-3 text-[var(--fg-secondary)] leading-7">
-              Talon is ML-based employee productivity & time tracking by HawkBytes. 3 users free
+              HawkLens is ML-based employee productivity & time tracking by HawkBytes. 3 users free
               forever. Simple, non-intrusive & easy to use.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">

@@ -1,5 +1,6 @@
 "use client";
 
+import { BRAND } from "../lib/brand";
 import { useLocale } from "./LocaleProvider";
 
 export default function Compare() {
@@ -42,8 +43,8 @@ export default function Compare() {
                   </span>
                 </th>
                 <th className="p-4 align-top text-[11px] font-bold uppercase tracking-[0.12em] text-[var(--pill-fg)]">
-                  Talon
-                  <span className="mt-1 block font-medium normal-case tracking-normal">{c.talonMeta}</span>
+                  {BRAND.name}
+                  <span className="mt-1 block font-medium normal-case tracking-normal">{c.brandMeta}</span>
                 </th>
               </tr>
             </thead>

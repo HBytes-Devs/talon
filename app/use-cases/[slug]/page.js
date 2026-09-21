@@ -10,9 +10,9 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const item = getUseCase(slug);
-  if (!item) return { title: "Use Cases - Talon" };
+  if (!item) return { title: "Use Cases - HawkLens" };
   return {
-    title: `${item.keyword.replace(/\b\w/g, (c) => c.toUpperCase())} - Talon`,
+    title: `${item.keyword.replace(/\b\w/g, (c) => c.toUpperCase())} - HawkLens`,
     description: item.summary,
   };
 }
@@ -60,13 +60,13 @@ export default async function UseCasePage({ params }) {
           <div className="grid gap-4">
             <div className="frost-panel p-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
-                Without Talon
+                Without HawkLens
               </p>
               <p className="mt-3 leading-7 text-[var(--fg-secondary)]">{item.without}</p>
             </div>
             <div className="magnetic-panel p-5">
               <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--pill-fg)]">
-                With Talon
+                With HawkLens
               </p>
               <p className="mt-3 leading-7 text-[var(--fg-secondary)]">{item.with}</p>
             </div>

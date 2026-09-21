@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { BRAND } from "../lib/brand";
 import LogoMark from "./LogoMark";
+import LanguageToggle from "./LanguageToggle";
 import { useLocale } from "./LocaleProvider";
 
 export default function Footer() {
@@ -25,6 +27,7 @@ export default function Footer() {
     { label: L.startFree, href: "/#beta" },
   ];
   const COMPANY = [
+    { label: BRAND.company, href: BRAND.website, external: true },
     { label: L.contact, href: "/#faq" },
     { label: L.privacy, href: "/#faq" },
     { label: L.terms, href: "/#faq" },
@@ -38,7 +41,7 @@ export default function Footer() {
           <div className="max-w-sm">
             <div className="mb-4 flex items-center gap-3 text-base font-normal leading-6">
               <LogoMark size={30} className="rounded-lg" />
-              Talon
+              {BRAND.name}
             </div>
             <p className="text-sm leading-6 text-[var(--fg-secondary)]">{f.blurb}</p>
             <div className="mt-5 flex flex-wrap gap-2">
@@ -55,9 +58,30 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-2 border-t border-[var(--border-subtle)] pt-6 text-xs text-[var(--fg-tertiary)] md:flex-row md:items-center md:justify-between">
-          <p>{f.copyright}</p>
-          <p>hawkbytes.cloud</p>
+        <div className="mt-12 flex flex-col gap-3 border-t border-[var(--border-subtle)] pt-6 text-xs text-[var(--fg-tertiary)] md:flex-row md:items-center md:justify-between">
+          <p>
+            {f.copyrightBefore}{" "}
+            <a
+              href={BRAND.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-[var(--border-subtle)] underline-offset-2 transition hover:text-[var(--fg-primary)]"
+            >
+              {BRAND.company}
+            </a>
+            {f.copyrightAfter}
+          </p>
+          <div className="footer-lang flex flex-wrap items-center gap-3">
+            <LanguageToggle />
+            <a
+              href={BRAND.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-[var(--border-subtle)] underline-offset-2 transition hover:text-[var(--fg-primary)]"
+            >
+              {BRAND.domain}
+            </a>
+          </div>
         </div>
       </div>
     </footer>
@@ -76,9 +100,20 @@ function FooterCol({ title, items }) {
       <ul data-footer-links="true" className="space-y-2">
         {items.map((item) => (
           <li key={item.label + item.href}>
-            <Link href={item.href} className={linkClass}>
-              {item.label}
-            </Link>
+            {item.external ? (
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkClass}
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link href={item.href} className={linkClass}>
+                {item.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

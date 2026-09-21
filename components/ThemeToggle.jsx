@@ -3,7 +3,7 @@
 import { useLayoutEffect, useState } from "react";
 import { useLocale } from "./LocaleProvider";
 
-const STORAGE_KEY = "talon-theme";
+const STORAGE_KEY = "hawklens-theme";
 
 function readTheme() {
   if (typeof document !== "undefined") {

@@ -3,8 +3,8 @@ import SiteShell from "../../components/SiteShell";
 import { POSTS } from "../../lib/content";
 
 export const metadata = {
-  title: "Blog - Talon",
-  description: "Productivity notes: win back time, reduce distractions & track work without losing yours.",
+  title: "Blog - HawkLens",
+  description: "PINNs, time accuracy, effective & productive time — research notes from HawkLens by HawkBytes.",
 };
 
 export default function BlogPage() {
@@ -14,10 +14,11 @@ export default function BlogPage() {
         <div className="container max-w-3xl">
           <span className="pill">Blog</span>
           <h1 className="display-type mt-5 text-balance text-4xl font-bold md:text-6xl">
-            Win back productivity & profits.
+            PINNs, time accuracy & productivity.
           </h1>
           <p className="mt-5 text-lg leading-8 text-[var(--fg-secondary)]">
-            How Talon helps businesses track time, cut distractions & keep monitoring non-intrusive.
+            How HawkLens uses physics-informed AI to improve total time, effective time, productive
+            time — and what we&apos;re shipping next.
           </p>
         </div>
 
@@ -27,7 +28,6 @@ export default function BlogPage() {
               key={post.slug}
               href={`/blog/${post.slug}`}
               className="magnetic-panel block p-6 transition hover:-translate-y-0.5"
-              data-reveal="true"
             >
               <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--fg-tertiary)]">
                 <span className="pill">{post.tag}</span>

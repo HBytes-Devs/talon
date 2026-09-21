@@ -60,6 +60,7 @@ export default function Hero() {
     let killed = false;
     let splitRevert = null;
     let timeline = null;
+    let floatTween = null;
     const mm = gsap.matchMedia();
 
     const boot = async () => {
@@ -151,7 +152,8 @@ export default function Hero() {
             );
 
             tl.add(() => {
-              gsap.to(".hero-stage .summon-panel", {
+              floatTween?.kill();
+              floatTween = gsap.to(".hero-stage .summon-panel", {
                 y: -5,
                 rotation: -2.1,
                 duration: 3.5,
@@ -159,6 +161,7 @@ export default function Hero() {
                 yoyo: true,
                 repeat: -1,
                 transformOrigin: "52% 42%",
+                force3D: true,
               });
             });
 
@@ -199,9 +202,28 @@ export default function Hero() {
             if (!killed) splitHeadline();
           });
 
+          // Failsafe: never leave hero stuck invisible if intro is interrupted
+          const failsafe = window.setTimeout(() => {
+            if (killed) return;
+            gsap.set(
+              [
+                headline,
+                ".hero-stage .summon-panel",
+                ".hero-stage .summon-workspaces",
+                ".hero-copy [data-hero-badge]",
+                ".hero-copy [data-hero-copy]",
+                ".hero-underline",
+              ],
+              { clearProps: "opacity,visibility,transform" }
+            );
+          }, 2200);
+
           return () => {
             killed = true;
+            window.clearTimeout(failsafe);
             timeline?.kill();
+            floatTween?.kill();
+            floatTween = null;
             splitRevert?.();
           };
         }
@@ -212,6 +234,8 @@ export default function Hero() {
 
     return () => {
       killed = true;
+      floatTween?.kill();
+      floatTween = null;
       mm.revert();
     };
   }, [locale]);

@@ -1334,10 +1334,13 @@
   isolation: isolate;
   overflow: hidden;
   transform-style: preserve-3d;
-  will-change: transform;
   transition:
     border-color 0.28s var(--ease-frost),
     box-shadow 0.28s var(--ease-frost);
+}
+
+.pricing-tilt-card.pointer-tilt.is-tilting {
+  will-change: transform;
 }
 
 .pricing-tilt-card.pointer-tilt {
@@ -1449,22 +1452,27 @@
 }
 
 /* Inner parallax — number < title < body < icon */
+.pricing-tilt-card.pointer-tilt.is-tilting .pricing-tilt-num,
+.pricing-tilt-card.pointer-tilt.is-tilting .pricing-tilt-title,
+.pricing-tilt-card.pointer-tilt.is-tilting .pricing-tilt-body,
+.pricing-tilt-card.pointer-tilt.is-tilting .pricing-tilt-icon,
+.pricing-tilt-card.pointer-tilt.is-tilting .pricing-tilt-meta {
+  will-change: transform;
+}
+
 .pricing-tilt-card.pointer-tilt .pricing-tilt-num {
   transform: translate3d(calc(var(--px) * 0.14), calc(var(--py) * 0.14), 0);
   transition: transform 0.12s linear;
-  will-change: transform;
 }
 
 .pricing-tilt-card.pointer-tilt .pricing-tilt-title {
   transform: translate3d(calc(var(--px) * 0.36), calc(var(--py) * 0.36), 0);
   transition: transform 0.12s linear;
-  will-change: transform;
 }
 
 .pricing-tilt-card.pointer-tilt .pricing-tilt-body {
   transform: translate3d(calc(var(--px) * 0.52), calc(var(--py) * 0.52), 0);
   transition: transform 0.12s linear;
-  will-change: transform;
 }
 
 .pricing-tilt-card.pointer-tilt .pricing-tilt-icon {
@@ -1473,7 +1481,6 @@
     scale(var(--icon-scale));
   transform-origin: left center;
   transition: transform 0.12s linear;
-  will-change: transform;
 }
 
 .pricing-tilt-card.pointer-tilt .pricing-tilt-meta {
@@ -2452,5 +2459,50 @@
   .packet-tilt-card.pointer-tilt .packet-tilt-icon,
   .packet-tilt-card.pointer-tilt .packet-tilt-meta {
     transform: none !important;
+  }
+}
+
+/* Compositor hints — only while motion is active (keeps Lighthouse clean) */
+@media (prefers-reduced-motion: no-preference) {
+  .summon-panel,
+  .summon-workspace,
+  .trust-dot,
+  .summon-row-active,
+  .atlas-orbit,
+  .audit-live-dot {
+    will-change: transform;
+  }
+
+  .summon-caret,
+  .summon-panel::after {
+    will-change: opacity, transform;
+  }
+
+  .packet-tilt-card.pointer-tilt.is-tilting,
+  .use-case-index-card.pointer-tilt.is-tilting,
+  .atlas-node.pointer-tilt.is-tilting,
+  .atlas-core.pointer-tilt.is-tilting {
+    will-change: transform;
+  }
+
+  .hero-line {
+    will-change: stroke-dashoffset;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .summon-panel,
+  .summon-workspace,
+  .trust-dot,
+  .summon-row-active,
+  .summon-caret,
+  .summon-panel::after,
+  .hero-line,
+  .packet-tilt-card,
+  .pricing-tilt-card,
+  .use-case-index-card,
+  .atlas-node,
+  .atlas-core {
+    will-change: auto !important;
   }
 }

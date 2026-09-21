@@ -40,7 +40,7 @@ const DESTINATIONS = [
   { id: "workflow", label: "How it works", hint: "Install, start, track & review", href: "/#workflow" },
   { id: "pricing", label: "Pricing", hint: "3 users free forever. $3.99 / user / month after", href: "/#pricing" },
   { id: "faq", label: "FAQ", hint: "Straight answers before you start", href: "/#faq" },
-  { id: "use-cases", label: "Use cases", hint: "Five ways Talon improves productivity", href: "/use-cases" },
+  { id: "use-cases", label: "Use cases", hint: "Five ways HawkLens improves productivity", href: "/use-cases" },
   { id: "blog", label: "Blog", hint: "Productivity notes from HawkBytes", href: "/blog" },
   { id: "beta", label: "Start free", hint: "3 users free forever. No credit card.", href: "/#beta" },
 ];

@@ -713,14 +713,28 @@ html.dark .theme-toggle .icon-sun {
   display: block;
 }
 
-.header-utilities {
-  position: absolute;
-  top: 0;
-  inset-inline-end: 0;
+.header-utilities,
+.header-utilities-inline {
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 0.2rem;
+}
+
+.header-utilities-inline {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header-utilities {
+  position: absolute;
+  top: 0;
+  inset-inline-end: 0;
   padding: 0.3rem;
   border-radius: 12px;
   border: 1px solid var(--border-glass);
@@ -810,6 +824,29 @@ html.dark .header-utilities {
   animation: lang-menu-in 0.22s var(--ease-frost) both;
 }
 
+/* Footer: open upward so the menu stays on-screen */
+.footer-lang .lang-menu {
+  top: auto;
+  bottom: calc(100% + 0.45rem);
+  animation-name: lang-menu-up;
+}
+
+@keyframes lang-menu-up {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.footer-lang .lang-toggle-trigger {
+  border-color: var(--border-subtle);
+  background: var(--surface-1);
+}
+
 @keyframes lang-menu-in {
   from {
     opacity: 0;
@@ -883,15 +920,9 @@ html.theme-switching *::after {
 
 @media (max-width: 639px) {
   .site-nav-shell nav[data-command-pill="true"] {
-    width: calc(100% - 6.75rem);
+    width: 100%;
     max-width: none;
     margin-inline: 0;
-  }
-
-  .header-utilities {
-    top: 0;
-    bottom: auto;
-    inset-inline-end: 0;
   }
 }
 

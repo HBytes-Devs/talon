@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BRAND } from "../lib/brand";
 import LogoMark from "./LogoMark";
-import LanguageToggle from "./LanguageToggle";
 import ThemeToggle from "./ThemeToggle";
 import { useLocale } from "./LocaleProvider";
 
@@ -58,11 +58,11 @@ export default function Header() {
       >
         <Link
           href="/"
-          aria-label="Talon"
+          aria-label={BRAND.name}
           className="flex min-w-0 flex-1 items-center gap-2 rounded-[8px] border-r border-[var(--border-subtle)] py-1 pl-2 pr-3 text-base font-normal text-[var(--fg-primary)] transition hover:bg-[var(--surface-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-strong)] navdesk:shrink-0 navdesk:flex-none navdesk:pr-4"
         >
           <LogoMark size={24} className="rounded-[6px]" />
-          <span className="truncate">Talon</span>
+          <span className="truncate">{BRAND.name}</span>
         </Link>
 
         <button
@@ -110,18 +110,16 @@ export default function Header() {
           })}
         </div>
 
-        <Link
-          href="/#beta"
-          className="btn btn-primary ml-1 !hidden h-9 shrink-0 px-3 navdesk:!inline-flex"
-        >
-          {t.signIn}
-        </Link>
+        <div className="ml-auto flex shrink-0 items-center gap-1 pl-1 navdesk:ml-1">
+          <ThemeToggle />
+          <Link
+            href="/#beta"
+            className="btn btn-primary !hidden h-9 shrink-0 px-3 navdesk:!inline-flex"
+          >
+            {t.signIn}
+          </Link>
+        </div>
       </nav>
-
-      <div className="header-utilities pointer-events-auto">
-        <LanguageToggle />
-        <ThemeToggle />
-      </div>
 
       {menuOpen ? (
         <>

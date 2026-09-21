@@ -27,7 +27,7 @@ export default function CommandAtlas({ items }) {
     <figure
       ref={stageRef}
       className="command-atlas-stage"
-      aria-label="Talon productivity atlas connecting five workforce workflows"
+      aria-label="HawkLens productivity atlas connecting five workforce workflows"
     >
       <div className="atlas-scan" aria-hidden="true" />
       <div className="atlas-core">
@@ -46,7 +46,7 @@ export default function CommandAtlas({ items }) {
             <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 0V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
           </svg>
         </span>
-        <strong>Talon Productivity Atlas</strong>
+        <strong>HawkLens Productivity Atlas</strong>
         <p>Track, report, bill & protect.</p>
       </div>
       <div className="atlas-orbit" aria-hidden="true">

@@ -5,9 +5,9 @@ import UseCaseIndexCards from "../../components/UseCaseIndexCards";
 import { USE_CASES } from "../../lib/content";
 
 export const metadata = {
-  title: "Use Cases - Talon",
+  title: "Use Cases - HawkLens",
   description:
-    "Learn how Talon improves productivity: live tracking, screenshots, idle time, attendance, location & invoicing.",
+    "Learn how HawkLens improves productivity: live tracking, screenshots, idle time, attendance, location & invoicing.",
 };
 
 export default function UseCasesPage() {
@@ -18,7 +18,7 @@ export default function UseCasesPage() {
           <div>
             <span className="pill">Use cases</span>
             <h1 className="display-type mt-6 max-w-4xl text-balance text-4xl font-extrabold leading-[1.02] text-[var(--fg-primary)] sm:text-5xl md:text-7xl md:leading-[0.96]">
-              Five ways Talon improves productivity in your business.
+              Five ways HawkLens improves productivity in your business.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-7 text-[var(--fg-secondary)] sm:text-lg sm:leading-8">
               Live tracking, screenshots, idle time, attendance, field location & task invoicing —
