@@ -153,6 +153,14 @@ export default function Hero() {
           const splitHeadline = () => {
             if (!headline || killed) return;
             const text = headline.textContent || "";
+            // Arabic/RTL: keep natural line wrapping — forced EN-style splits break shaping.
+            const isRtl =
+              document.documentElement.getAttribute("dir") === "rtl" ||
+              document.documentElement.getAttribute("data-locale") === "ar";
+            if (isRtl || text.trim().split(/\s+/).length < 3) {
+              timeline = runIntro([]);
+              return;
+            }
             const words = text.trim().split(/\s+/);
             headline.setAttribute("aria-label", text);
             headline.innerHTML = "";
@@ -268,7 +276,7 @@ export default function Hero() {
           </p>
 
           <div data-hero-copy="true" className="mt-9 flex max-w-full flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a href="#beta" className="btn btn-primary h-14 w-full px-5 sm:w-auto">
+            <a href="/start" className="btn btn-primary h-14 w-full px-5 sm:w-auto">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

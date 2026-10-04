@@ -10,12 +10,12 @@ import ThemeToggle from "./ThemeToggle";
 import { useLocale } from "./LocaleProvider";
 
 const NAV = [
-  { href: "/#product", key: "features" },
-  { href: "/#workflow", key: "workflow" },
+  { href: "/features", key: "features" },
+  { href: "/how-it-works", key: "workflow" },
   { href: "/use-cases", key: "useCases" },
-  { href: "/#pricing", key: "pricing" },
+  { href: "/pricing", key: "pricing" },
   { href: "/blog", key: "blog" },
-  { href: "/#faq", key: "faq" },
+  { href: "/faq", key: "faq" },
 ];
 
 const NAV_GLYPHS = {
@@ -86,7 +86,7 @@ const linkClass =
 
 export default function Header() {
   const pathname = usePathname();
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -118,25 +118,27 @@ export default function Header() {
     >
       <nav
         data-command-pill="true"
+        data-locale={locale}
         className="pointer-events-auto mx-auto flex w-full max-w-full items-center gap-1 rounded-[12px] border border-[var(--border-glass)] bg-[var(--surface-strong)] px-2 py-2 shadow-[0_24px_60px_-42px_rgba(37,50,72,.72),inset_0_1px_0_rgba(255,255,255,.9)] backdrop-blur-2xl"
       >
         <Link
           href="/"
           aria-label={BRAND.name}
-          className="flex min-w-0 shrink-0 items-center gap-2 rounded-[8px] border-r border-[var(--border-subtle)] py-1 pl-2 pr-3 text-base font-normal text-[var(--fg-primary)] transition hover:bg-[var(--surface-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-strong)] navdesk:pr-4"
+          className="flex min-w-0 shrink-0 items-center gap-2 rounded-[8px] border-e border-[var(--border-subtle)] py-1 ps-2 pe-3 text-base font-normal text-[var(--fg-primary)] transition hover:bg-[var(--surface-2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-strong)] navdesk:pe-4"
         >
           <LogoMark size={24} className="rounded-[6px]" />
           <span className="truncate">{BRAND.name}</span>
         </Link>
 
-        <div data-nav-links="true" className="hidden items-center navdesk:flex">
+        <div data-nav-links="true" className="hidden min-w-0 items-center navdesk:flex">
           {NAV.map((item) => {
+            const path = pathname.replace(/\/$/, "") || "/";
             const active =
               item.href === "/blog"
-                ? pathname.startsWith("/blog")
+                ? path.startsWith("/blog")
                 : item.href === "/use-cases"
-                  ? pathname.startsWith("/use-cases")
-                  : false;
+                  ? path.startsWith("/use-cases")
+                  : path === item.href;
             return (
               <Link
                 key={item.href}
@@ -144,22 +146,24 @@ export default function Header() {
                 className={`${linkClass} ${active ? "bg-[var(--surface-2)] text-[var(--fg-primary)]" : ""}`}
               >
                 <NavIcon name={item.key} />
-                {t.nav[item.key]}
+                <span className="nav-link-label">{t.nav[item.key]}</span>
               </Link>
             );
           })}
         </div>
 
-        <div className="ml-auto flex shrink-0 items-center gap-1.5 pl-2">
+        <div className="ms-auto flex shrink-0 items-center gap-1.5 ps-2">
           <LanguageToggle />
           <ThemeToggle />
           <Link
-            href="/#beta"
+            href="/start"
+            data-nav-cta="true"
             className="btn btn-primary !hidden h-9 shrink-0 px-3 navdesk:!inline-flex"
           >
             {t.signIn}
           </Link>
           <button
+            data-nav-menu="true"
             className="inline-flex size-9 shrink-0 items-center justify-center rounded-[8px] text-[var(--fg-secondary)] transition hover:bg-[var(--bg-card)] hover:text-[var(--fg-primary)] navdesk:hidden"
             aria-label={t.openMenu}
             type="button"
@@ -208,7 +212,7 @@ export default function Header() {
             ))}
             <div className="mt-1 flex items-center gap-2 border-t border-[var(--border-subtle)] p-2">
               <Link
-                href="/#beta"
+                href="/start"
                 className="btn btn-primary h-9 flex-1 px-3"
                 onClick={() => setMenuOpen(false)}
               >

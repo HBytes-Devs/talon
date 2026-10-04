@@ -67,7 +67,7 @@ export default async function BlogPostPage({ params }) {
               forever. Simple, non-intrusive & easy to use.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/#beta" className="btn btn-primary">
+              <Link href="/start" className="btn btn-primary">
               Start free
               </Link>
               <Link href="/" className="btn btn-secondary">

@@ -55,7 +55,7 @@ export default function Pricing() {
             <p className="mt-4 text-sm leading-6 text-[var(--fg-secondary)] pricing-tilt-body">
               {p.freeBody2}
             </p>
-            <a href="#beta" className="btn btn-primary mt-auto w-full">
+            <a href="/start" className="btn btn-primary mt-auto w-full">
               {p.freeCta}
             </a>
             <p className="mt-3 text-xs invisible" aria-hidden="true">
@@ -93,7 +93,7 @@ export default function Pricing() {
               <li>• {p.featureLocation}</li>
               <li>• {p.featureTask}</li>
             </ul>
-            <a href="#beta" className="btn btn-primary mt-auto w-full">
+            <a href="/start" className="btn btn-primary mt-auto w-full">
               {p.premiumCta}
             </a>
             <p className="mt-3 text-xs text-[var(--fg-tertiary)] pricing-tilt-meta">

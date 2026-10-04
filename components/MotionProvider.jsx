@@ -127,14 +127,10 @@ export default function MotionProvider({ children }) {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
           const a = e.target?.closest?.("a");
           if (!a || a.classList.contains("skip-link")) return;
+          // Keep URLs hash-free: never push `#section` into the address bar.
           const url = new URL(a.href, window.location.href);
-          if (
-            url.origin !== window.location.origin ||
-            url.pathname !== window.location.pathname ||
-            !url.hash
-          ) {
-            return;
-          }
+          if (url.origin !== window.location.origin || !url.hash) return;
+          // Ignore leftover hash links if any remain — scroll without changing URL.
           let target = null;
           try {
             target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
@@ -143,7 +139,6 @@ export default function MotionProvider({ children }) {
           }
           if (!target) return;
           e.preventDefault();
-          history.pushState(null, "", url.hash);
           target.scrollIntoView({ behavior: "smooth", block: "start" });
         };
 

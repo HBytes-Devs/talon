@@ -32,8 +32,14 @@ function ShellInner({ children }) {
   return (
     <MotionProvider>
       <a
-        href="#top"
+        href="/"
         className="skip-link sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:m-0 focus:h-auto focus:w-auto focus:overflow-visible focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
+        onClick={(e) => {
+          if (window.location.pathname.replace(/\/$/, "") === "" || window.location.pathname === "/") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
       >
         {t.skipToContent}
       </a>

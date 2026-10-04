@@ -36,29 +36,18 @@ const BLUEPRINTS = [
 ];
 
 const DESTINATIONS = [
-  { id: "product", label: "Features", hint: "Live tracking, screenshots, timeline & reports", href: "/#product" },
-  { id: "workflow", label: "How it works", hint: "Install, start, track & review", href: "/#workflow" },
-  { id: "pricing", label: "Pricing", hint: "3 users free forever. $3.99 / user / month after", href: "/#pricing" },
-  { id: "faq", label: "FAQ", hint: "Straight answers before you start", href: "/#faq" },
+  { id: "product", label: "Features", hint: "Live tracking, screenshots, timeline & reports", href: "/features" },
+  { id: "workflow", label: "How it works", hint: "Install, start, track & review", href: "/how-it-works" },
+  { id: "pricing", label: "Pricing", hint: "3 users free forever. $3.99 / user / month after", href: "/pricing" },
+  { id: "faq", label: "FAQ", hint: "Straight answers before you start", href: "/faq" },
   { id: "use-cases", label: "Use cases", hint: "Five ways HawkLens improves productivity", href: "/use-cases" },
   { id: "blog", label: "Blog", hint: "Productivity notes from HawkBytes", href: "/blog" },
-  { id: "beta", label: "Start free", hint: "3 users free forever. No credit card.", href: "/#beta" },
+  { id: "privacy", label: "Privacy policy", hint: "Data retention, AWS S3 & Client policies", href: "/privacy" },
+  { id: "beta", label: "Start free", hint: "3 users free forever. No credit card.", href: "/start" },
 ];
 
 function goTo(href) {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const homePath = base || "/";
-  if (href.startsWith("/#") || href.startsWith("#")) {
-    const hash = href.includes("#") ? `#${href.split("#")[1]}` : href;
-    const path = window.location.pathname.replace(/\/$/, "") || "/";
-    const atHome = path === homePath || path === "/";
-    if (!atHome) {
-      window.location.href = `${base}/${hash}`;
-      return;
-    }
-    document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
-    return;
-  }
   window.location.href = `${base}${href}`;
 }
 

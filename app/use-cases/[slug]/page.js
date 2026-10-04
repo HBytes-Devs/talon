@@ -33,10 +33,10 @@ export default async function UseCasePage({ params }) {
           </h1>
           <p className="mt-5 text-lg leading-8 text-[var(--fg-secondary)]">{item.summary}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/#beta" className="btn btn-primary">
+            <Link href="/start" className="btn btn-primary">
               Start free
             </Link>
-            <Link href="/#workflow" className="btn btn-secondary">
+            <Link href="/how-it-works" className="btn btn-secondary">
               See how it works
             </Link>
           </div>
@@ -194,7 +194,7 @@ export default async function UseCasePage({ params }) {
             <p className="mt-4 max-w-2xl text-[var(--fg-secondary)] leading-7">
               Start tracking productivity today. No credit card. Windows, Mac & mobile.
             </p>
-            <Link href="/#beta" className="btn btn-primary mt-6">
+            <Link href="/start" className="btn btn-primary mt-6">
               Start free
             </Link>
           </div>

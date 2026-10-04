@@ -11,25 +11,26 @@ export default function Footer() {
   const L = f.links;
 
   const PRODUCT = [
-    { label: L.features, href: "/#product" },
-    { label: L.howItWorks, href: "/#workflow" },
-    { label: L.startFree, href: "/#beta" },
+    { label: L.features, href: "/features" },
+    { label: L.howItWorks, href: "/how-it-works" },
+    { label: L.startFree, href: "/start" },
     { label: L.useCases, href: "/use-cases" },
     { label: L.liveTracking, href: "/use-cases/live-activity-screenshots" },
-    { label: L.pricing, href: "/#pricing" },
+    { label: L.pricing, href: "/pricing" },
   ];
   const RESOURCES = [
-    { label: L.faq, href: "/#faq" },
+    { label: L.faq, href: "/faq" },
     { label: L.blog, href: "/blog" },
+    { label: L.privacy, href: "/privacy" },
     { label: L.screenshots, href: "/use-cases/live-activity-screenshots" },
     { label: L.timeAttendance, href: "/use-cases/time-attendance" },
   ];
   const COMPANY = [
     { label: BRAND.company, href: BRAND.website, external: true },
     { label: L.contact, href: `mailto:${BRAND.email}` },
-    { label: L.privacy, href: "/#faq" },
-    { label: L.terms, href: "/#faq" },
-    { label: L.press, href: "/#faq" },
+    { label: L.privacy, href: "/privacy" },
+    { label: L.terms, href: "/privacy" },
+    { label: L.press, href: `mailto:${BRAND.email}` },
   ];
 
   return (
@@ -47,7 +48,7 @@ export default function Footer() {
               <span>{f.chipPlatforms}</span>
               <span>{f.chipTime}</span>
             </div>
-            <Link href="/#beta" className="btn btn-primary mt-5 h-10 w-fit px-4">
+            <Link href="/start" className="btn btn-primary mt-5 h-10 w-fit px-4">
               {L.startFree}
             </Link>
           </div>
@@ -66,6 +67,9 @@ export default function Footer() {
             {f.copyrightAfter}
           </p>
           <div className="footer-lang">
+            <Link href="/privacy" className="site-footer-bar-link">
+              {L.privacy}
+            </Link>
             <a href={BRAND.website} target="_blank" rel="noopener noreferrer">
               {BRAND.domain}
             </a>

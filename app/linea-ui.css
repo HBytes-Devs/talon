@@ -378,8 +378,14 @@
   height: 0.75rem;
   position: absolute;
   bottom: -0.55rem;
-  left: 4%;
+  inset-inline-start: 4%;
   overflow: visible;
+}
+
+html[dir="rtl"] .hero-underline {
+  /* Draw from the Arabic text start (right → left) */
+  transform: scaleX(-1);
+  transform-origin: center;
 }
 
 .trust-dot {
@@ -848,6 +854,12 @@
   overflow: visible;
 }
 
+html[dir="rtl"] .workflow-section {
+  background:
+    linear-gradient(270deg, #ffffff70, #fff3),
+    radial-gradient(700px 420px at 18% 20%, #2bb89a14, #0000 64%);
+}
+
 .workflow-section::before {
   pointer-events: none;
   content: "";
@@ -934,7 +946,7 @@
   position: absolute;
   top: 24px;
   bottom: 24px;
-  left: 25px;
+  inset-inline-start: 25px;
 }
 
 .workflow-step {
@@ -2287,6 +2299,44 @@ html[dir="rtl"] .support-bubble.is-user {
   border-bottom-left-radius: 5px;
 }
 
+html[dir="rtl"] .support-send svg {
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .summon-search .kbd,
+html[dir="rtl"] .summon-context {
+  margin-left: 0;
+  margin-inline-start: auto;
+}
+
+html[dir="rtl"] .summon-row,
+html[dir="rtl"] .support-suggestions button {
+  text-align: start;
+}
+
+html[dir="rtl"] .summon-row:hover {
+  transform: translate(-2px);
+}
+
+html[dir="rtl"] .site-footer-link {
+  margin-left: 0;
+  margin-inline-start: -0.4rem;
+}
+
+html[dir="rtl"] .site-footer-col h3 {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+html[dir="rtl"] .hero-copy,
+html[dir="rtl"] .section-copy,
+html[dir="rtl"] .workflow-section .container-grid > :first-child,
+html[dir="rtl"] .packet-copy,
+html[dir="rtl"] .local-first-copy,
+html[dir="rtl"] .final-cta-copy {
+  text-align: start;
+}
+
 @media (max-width: 640px) {
   .support-fab-label {
     display: none;
@@ -2408,6 +2458,17 @@ html[dir="rtl"] .support-bubble.is-user {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.85rem;
+}
+
+.site-footer-bar .site-footer-bar-link {
+  color: var(--fg-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  transition: color 0.18s var(--ease-frost);
+}
+
+.site-footer-bar .site-footer-bar-link:hover {
+  color: var(--fg-primary);
 }
 
 @media (max-width: 900px) {
@@ -2612,13 +2673,13 @@ html[dir="rtl"] .support-bubble.is-user {
     width: 70%;
     height: 0.6rem;
     bottom: -0.4rem;
-    left: 2%;
+    inset-inline-start: 2%;
   }
   .workflow-step-marker {
     width: 34px;
   }
   .workflow-lane::before {
-    left: 17px;
+    inset-inline-start: 17px;
   }
   .hero-section::before {
     display: none;
@@ -2670,15 +2731,48 @@ html[dir="rtl"] .support-bubble.is-user {
 
 .use-case-page {
   min-height: 100vh;
-  padding-top: 7.5rem;
 }
 
 .use-case-index-hero {
   display: grid;
   align-items: center;
-  gap: clamp(2rem, 5vw, 4.5rem);
-  padding-block: clamp(3rem, 8vw, 6.5rem);
-  grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  padding-top: 8rem;
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+  grid-template-columns: 1fr;
+}
+
+.use-case-index-copy,
+.use-case-index-visual {
+  min-width: 0;
+}
+
+.use-case-index-title {
+  max-width: 16ch;
+  font-size: clamp(2.15rem, 5vw, 3.75rem);
+  line-height: 1.05;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+@media (min-width: 768px) {
+  .use-case-index-hero {
+    padding-top: 6rem;
+  }
+}
+
+/* Only split copy + atlas when there is real room (prevents overlap) */
+@media (min-width: 1100px) {
+  .use-case-index-hero {
+    grid-template-columns: minmax(0, 0.92fr) minmax(320px, 1.08fr);
+  }
+
+  .use-case-index-title {
+    max-width: 11.5ch;
+    font-size: clamp(2.6rem, 3.8vw, 4.1rem);
+    line-height: 0.98;
+  }
 }
 
 .use-case-index-grid {
@@ -2840,6 +2934,7 @@ html[dir="rtl"] .support-bubble.is-user {
   isolation: isolate;
   position: relative;
   overflow: hidden;
+  width: 100%;
   min-height: 640px;
   border-radius: 30px;
   border: 1px solid #ffffffeb;
@@ -3013,8 +3108,13 @@ html[dir="rtl"] .support-bubble.is-user {
   transition: transform 0.8s var(--ease-frost);
 }
 
-.command-atlas-stage:has(.atlas-core.is-tilting) .atlas-orbit {
-  animation: atlas-orbit-drift 16s ease-in-out infinite;
+.command-atlas-stage .atlas-orbit {
+  animation: atlas-orbit-drift 22s ease-in-out infinite;
+}
+
+.command-atlas-stage:hover .atlas-orbit,
+.command-atlas-stage.is-dragging .atlas-orbit {
+  animation-play-state: paused;
 }
 
 @keyframes atlas-orbit-drift {
@@ -3053,13 +3153,54 @@ html[dir="rtl"] .support-bubble.is-user {
   inset: 2.2rem;
 }
 
+.atlas-slot {
+  --drag-x: 0px;
+  --drag-y: 0px;
+  width: min(36%, 196px);
+  position: absolute;
+  z-index: 3;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+  animation: atlas-card-float 5.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.atlas-slot.atlas-float-1 { animation-duration: 5.2s; animation-delay: 0s; }
+.atlas-slot.atlas-float-2 { animation-duration: 6s; animation-delay: 0.4s; }
+.atlas-slot.atlas-float-3 { animation-duration: 5.6s; animation-delay: 0.15s; }
+.atlas-slot.atlas-float-4 { animation-duration: 6.2s; animation-delay: 0.55s; }
+.atlas-slot.atlas-float-5 { animation-duration: 5.8s; animation-delay: 0.25s; }
+
+.atlas-slot.is-dragging {
+  z-index: 8;
+  cursor: grabbing;
+  animation-play-state: paused;
+}
+
+/* Pause float on card hover only (not whole stage) */
+.atlas-slot:hover {
+  animation-play-state: paused;
+  z-index: 6;
+}
+
+@keyframes atlas-card-float {
+  0%,
+  100% {
+    transform: translate3d(var(--drag-x), var(--drag-y), 0);
+  }
+  50% {
+    transform: translate3d(var(--drag-x), calc(var(--drag-y) - 12px), 0);
+  }
+}
+
 .atlas-node {
-  width: min(32%, 180px);
+  width: 100%;
   color: inherit;
   display: grid;
   gap: 0.44rem;
   padding: 0.9rem;
-  position: absolute;
+  position: relative;
   overflow: hidden;
   isolation: isolate;
   border-radius: 18px;
@@ -3163,8 +3304,11 @@ html[dir="rtl"] .support-bubble.is-user {
 
 .atlas-node strong {
   color: var(--fg-primary);
-  font-size: 0.98rem;
-  line-height: 1.12;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
 }
 
 .atlas-node.pointer-tilt strong {
@@ -3182,11 +3326,11 @@ html[dir="rtl"] .support-bubble.is-user {
   transform: translate3d(calc(var(--px) * 0.62), calc(var(--py) * 0.62), 0);
 }
 
-.atlas-node-templates { top: 4%; left: 7%; }
-.atlas-node-history { top: 3%; right: 4%; }
-.atlas-node-manager { top: 44%; left: 0; }
-.atlas-node-local { bottom: 2%; right: 0; }
-.atlas-node-hotkey { bottom: 4%; left: 22%; }
+.atlas-slot.atlas-node-templates { top: 4%; left: 7%; }
+.atlas-slot.atlas-node-history { top: 3%; right: 4%; }
+.atlas-slot.atlas-node-manager { top: 44%; left: 0; }
+.atlas-slot.atlas-node-local { bottom: 2%; right: 0; }
+.atlas-slot.atlas-node-hotkey { bottom: 4%; left: 22%; }
 
 .atlas-feed {
   display: none;
@@ -3196,21 +3340,18 @@ html[dir="rtl"] .support-bubble.is-user {
   .command-atlas-stage {
     min-height: 560px;
   }
-  .atlas-node {
+  .atlas-slot {
     width: min(44%, 210px);
   }
-  .atlas-node-local {
+  .atlas-slot.atlas-node-local {
     right: 2%;
   }
 }
 
 @media (max-width: 640px) {
-  .use-case-page {
-    padding-top: 6.75rem;
-  }
   .use-case-index-hero {
-    grid-template-columns: 1fr;
-    padding-block: 2rem 4rem;
+    padding-top: 7rem;
+    padding-bottom: 3.5rem;
   }
   .use-case-index-grid {
     grid-template-columns: 1fr;
@@ -3245,13 +3386,22 @@ html[dir="rtl"] .support-bubble.is-user {
     position: relative;
     inset: auto;
   }
+  .atlas-slot {
+    width: auto;
+    position: relative;
+    inset: auto;
+    transform: none !important;
+    cursor: default;
+    touch-action: auto;
+    animation: none !important;
+  }
   .atlas-node {
     width: auto;
     padding: 0.72rem;
     position: relative;
     inset: auto;
   }
-  .atlas-node-hotkey {
+  .atlas-slot.atlas-node-hotkey {
     grid-column: 1 / -1;
     justify-self: center;
     width: min(100%, 220px);
@@ -3261,6 +3411,11 @@ html[dir="rtl"] .support-bubble.is-user {
 @media (prefers-reduced-motion: reduce) {
   .command-atlas-stage:has(.atlas-core.is-tilting) .atlas-orbit {
     animation: none !important;
+  }
+
+  .atlas-slot {
+    animation: none !important;
+    transform: translate3d(var(--drag-x), var(--drag-y), 0) !important;
   }
 
   .atlas-node.pointer-tilt,

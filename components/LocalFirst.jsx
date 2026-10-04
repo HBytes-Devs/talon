@@ -36,7 +36,7 @@ export default function LocalFirst() {
           </p>
           <h3 className="mt-3 text-2xl font-bold">{l.panelTitle}</h3>
           <p className="mt-4 text-lg leading-8 text-[var(--fg-secondary)]">{l.panelBody}</p>
-          <a href="#beta" className="btn btn-primary mt-6">
+          <a href="/start" className="btn btn-primary mt-6">
             {l.cta}
           </a>
         </div>

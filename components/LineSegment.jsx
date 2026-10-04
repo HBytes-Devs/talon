@@ -3,6 +3,13 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLocale } from "./LocaleProvider";
+
+function isRtlDoc() {
+  if (typeof document === "undefined") return false;
+  const root = document.documentElement;
+  return root.getAttribute("dir") === "rtl" || root.getAttribute("data-locale") === "ar";
+}
 
 const SCROLL = {
   workflow: { start: "top 78%", end: "bottom 42%" },
@@ -79,6 +86,7 @@ function setDrawProgress(path, progress) {
  * Draws on scroll down; reverses (removes) on scroll up via scrub.
  */
 export default function LineSegment({ variant = "workflow" }) {
+  const { locale } = useLocale();
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
   }, []);
@@ -124,7 +132,8 @@ export default function LineSegment({ variant = "workflow" }) {
           const h = rect.height;
           svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
 
-          const fallbackSeam = 0.62 * w;
+          const rtl = isRtlDoc();
+          const fallbackSeam = (rtl ? 0.38 : 0.62) * w;
           const seamX = seamXFromRunner(rect, fallbackSeam);
           const SEAM = 64; // overlap so adjacent SVGs meet as one continuous stroke
           let pts = [];
@@ -132,8 +141,10 @@ export default function LineSegment({ variant = "workflow" }) {
             const markers = Array.from(section.querySelectorAll(".workflow-step-marker"));
             if (!markers.length) return;
             const exit = runnerExit(section, rect, seamX);
+            // LTR: start over copy (left). RTL: start over Arabic copy (right).
+            const startX = rtl ? 0.86 * w : 0.14 * w;
             pts = [
-              { x: 0.14 * w, y: 0 },
+              { x: startX, y: 0 },
               ...markers.map((m) => centerIn(m, rect)),
               { x: exit.x, y: Math.max(exit.y - 100, exit.y * 0.55) },
               { x: exit.x, y: exit.y },
@@ -144,8 +155,9 @@ export default function LineSegment({ variant = "workflow" }) {
             if (!articles.length) return;
             pts = [{ x: seamX, y: -SEAM }];
             articles.forEach((article, i) => {
+              const zig = (i % 2 === 0 ? 1 : -1) * 0.08 * w;
               pts.push({
-                x: 0.5 * w + (i % 2 === 0 ? 1 : -1) * 0.08 * w,
+                x: 0.5 * w + (rtl ? -zig : zig),
                 y: centerIn(article, rect).y,
               });
             });
@@ -243,7 +255,7 @@ export default function LineSegment({ variant = "workflow" }) {
     );
 
     return () => mm.revert();
-  }, [variant]);
+  }, [variant, locale]);
 
   return (
     <svg
