@@ -116,13 +116,23 @@ export default function Packet() {
             <p className="mt-3 text-sm leading-6 text-[var(--fg-secondary)] packet-tilt-body">
               {pk.sourceBody}
             </p>
-            <div className="packet-source-preview mt-4">
-              <span className="packet-line w-[92%]" />
-              <span className="packet-line w-[78%]" />
-              <span className="packet-line w-[86%]" />
-              <span className="packet-line w-[64%]" />
+            <div className="packet-mix mt-4">
+              <div className="packet-mix-bar" aria-hidden="true">
+                <span className="is-good" />
+                <span className="is-warn" />
+              </div>
+              <div className="packet-mix-row">
+                <span className="packet-mix-dot is-good" />
+                <span>{pk.mixProductive}</span>
+                <strong>72%</strong>
+              </div>
+              <div className="packet-mix-row">
+                <span className="packet-mix-dot is-warn" />
+                <span>{pk.mixDistraction}</span>
+                <strong>28%</strong>
+              </div>
             </div>
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-[var(--fg-tertiary)] packet-tilt-meta">
+            <div className="packet-mix-meta packet-tilt-meta">
               <span>{pk.present}</span>
               <span>{pk.idle}</span>
               <span>{pk.mlTags}</span>
@@ -139,9 +149,7 @@ export default function Packet() {
                 <p className="mt-2 text-sm leading-6 text-[var(--fg-secondary)] packet-tilt-body">
                   {card.body}
                 </p>
-                <span className="inline-flex rounded-[8px] border border-[var(--border-subtle)] bg-[var(--surface-2)] px-2.5 py-1 font-mono text-[11px] packet-tilt-meta">
-                  {card.chip}
-                </span>
+                <span className="packet-tilt-meta">{card.chip}</span>
               </div>
             ))}
           </div>

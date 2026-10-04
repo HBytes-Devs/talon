@@ -410,10 +410,19 @@ kbd,
 
 .site-nav-shell {
   top: max(1rem, env(safe-area-inset-top));
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   position: fixed;
+  width: min(1180px, calc(100% - 40px));
+  max-width: calc(100% - 2rem);
+  margin-inline: auto;
+}
+
+.site-nav-shell nav[data-command-pill="true"] {
+  width: 100%;
 }
 
 .site-nav-shell.is-scrolled nav {
@@ -463,7 +472,7 @@ html.dark .site-nav-shell.is-scrolled nav {
 
 /* —— Dark mode surfaces (professional SaaS) —— */
 html.dark .frost-panel,
-html.dark .magnetic-panel,
+html.dark .magnetic-panel:not(.summon-panel),
 html.dark .pricing-ledger-sheet,
 html.dark .workflow-runner,
 html.dark .compare-panel,
@@ -501,40 +510,70 @@ html.dark .pricing-ledger-featured.pricing-tilt-card::after {
   box-shadow: inset 0 0 0 1px #2bb89a1a;
 }
 
-/* Hide decorative hero side layers in dark — they read as light ghosts */
+/* Hide decorative hero side layers — backdrop ghosts / field blobs */
+.summon-field,
+.summon-field::before,
+.summon-field::after,
+.summon-workspaces,
+.summon-workspace,
+.summon-panel .surface-sweep {
+  display: none !important;
+}
+
 html.dark .summon-workspaces,
 html.dark .summon-workspace,
 html.dark .summon-field {
   display: none !important;
 }
 
-/* backdrop-filter + overflow clip draws light ghost rectangles on the sides */
 html.dark .summon-stage {
   overflow: visible;
   background: transparent;
 }
 
-html.dark .summon-panel.magnetic-panel {
+html.dark .summon-panel {
+  background: #151d28 !important;
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
   border-color: #ffffff14 !important;
-  box-shadow: 0 40px 100px -56px #000000e0, inset 0 1px 0 #ffffff0c !important;
+  box-shadow: 0 18px 44px -28px #000000e0, inset 0 1px 0 #ffffff0c !important;
 }
 
 html.dark .summon-panel .surface-sweep {
-  opacity: 0.12;
-  background: linear-gradient(90deg, #0000, #ffffff22, #0000);
+  display: none !important;
+}
+
+html.dark .summon-panel .summon-status,
+html.dark .summon-panel .summon-toolbar span,
+html.dark .summon-panel .summon-toolbar button {
+  background: #1a2330 !important;
+}
+
+html.dark .summon-panel .summon-search {
+  background: #1c2633 !important;
+}
+
+html.dark .summon-panel .summon-row {
+  background: #1a2330 !important;
+}
+
+html.dark .summon-panel .summon-context span {
+  background: #1e2836 !important;
 }
 
 html.dark .summon-search {
   box-shadow: inset 0 1px #ffffff12 !important;
 }
 
-html.dark .magnetic-panel {
+html.dark .magnetic-panel:not(.summon-panel) {
   background:
     linear-gradient(180deg, #222c3af5, transparent 42%),
     radial-gradient(520px 260px at 82% 16%, #2bb89a24, transparent 62%),
     #151d28f0 !important;
+}
+
+html.dark .summon-panel {
+  background: #151d28 !important;
 }
 
 html.dark .site-nav-shell nav,
@@ -617,7 +656,6 @@ html.dark .workflow-section {
 
 html.dark .workflow-step-body,
 html.dark .workflow-lane,
-html.dark .summon-panel,
 html.dark .command-surface-panel {
   background: #151d28e8 !important;
   border-color: var(--border-subtle);
@@ -661,6 +699,14 @@ html.dark .hero-stage {
 
 html.dark .packet-line {
   background: #8b9aad33 !important;
+}
+
+html.dark .packet-mix,
+html.dark .packet-mix-meta span,
+html.dark .packet-feature-card .packet-tilt-meta {
+  background: #1a2330 !important;
+  border-color: #ffffff22 !important;
+  color: var(--fg-secondary);
 }
 
 .theme-toggle {
@@ -919,6 +965,11 @@ html.theme-switching *::after {
 }
 
 @media (max-width: 639px) {
+  .site-nav-shell {
+    width: calc(100% - 2rem);
+    max-width: none;
+  }
+
   .site-nav-shell nav[data-command-pill="true"] {
     width: 100%;
     max-width: none;

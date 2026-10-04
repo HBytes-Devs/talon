@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import CommandPalette from "./CommandPalette";
+import SupportWidget from "./SupportWidget";
 import MotionProvider from "./MotionProvider";
 import { LocaleProvider, useLocale } from "./LocaleProvider";
 
@@ -39,6 +40,7 @@ function ShellInner({ children }) {
       <Header />
       {children}
       <Footer />
+      <SupportWidget />
       <CommandPalette open={cmdOpen} onClose={closeCmd} />
     </MotionProvider>
   );

@@ -27,6 +27,15 @@ Open [http://localhost:3000](http://localhost:3000)
 
 - `⌘K` / `Ctrl+K` — command palette
 - Hero panel tabs: **Live**, **Idle**, **Reports** (dummy data)
+- Bottom-right **AI Support** chat (`/api/support/chat`)
+
+### AI Support
+
+1. Copy `.env.example` → `.env.local`
+2. Set `OPENAI_API_KEY` (or `SUPPORT_AI_API_KEY` + optional `SUPPORT_AI_BASE_URL` / `SUPPORT_AI_MODEL`)
+3. Restart `npm run dev`
+
+Without a key, the widget still answers from the FAQ knowledge base (local fallback). Keys stay server-side only.
 
 ## Production
 

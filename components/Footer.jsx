@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { BRAND } from "../lib/brand";
 import LogoMark from "./LogoMark";
-import LanguageToggle from "./LanguageToggle";
 import { useLocale } from "./LocaleProvider";
 
 export default function Footer() {
@@ -24,61 +23,50 @@ export default function Footer() {
     { label: L.blog, href: "/blog" },
     { label: L.screenshots, href: "/use-cases/live-activity-screenshots" },
     { label: L.timeAttendance, href: "/use-cases/time-attendance" },
-    { label: L.startFree, href: "/#beta" },
   ];
   const COMPANY = [
     { label: BRAND.company, href: BRAND.website, external: true },
-    { label: L.contact, href: "/#faq" },
+    { label: L.contact, href: `mailto:${BRAND.email}` },
     { label: L.privacy, href: "/#faq" },
     { label: L.terms, href: "/#faq" },
     { label: L.press, href: "/#faq" },
   ];
 
   return (
-    <footer className="border-t border-[var(--border-subtle)] py-10">
+    <footer className="site-footer">
       <div className="container-grid">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_2fr]">
-          <div className="max-w-sm">
-            <div className="mb-4 flex items-center gap-3 text-base font-normal leading-6">
-              <LogoMark size={30} className="rounded-lg" />
-              {BRAND.name}
+        <div className="site-footer-grid">
+          <div className="site-footer-brand">
+            <Link href="/" className="site-footer-logo">
+              <LogoMark size={32} className="rounded-lg" />
+              <span>{BRAND.name}</span>
+            </Link>
+            <p>{f.blurb}</p>
+            <div className="site-footer-chips">
+              <span>{f.chipFree}</span>
+              <span>{f.chipPlatforms}</span>
+              <span>{f.chipTime}</span>
             </div>
-            <p className="text-sm leading-6 text-[var(--fg-secondary)]">{f.blurb}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              <span className="kbd">{f.chipFree}</span>
-              <span className="kbd">{f.chipPlatforms}</span>
-              <span className="kbd">{f.chipTime}</span>
-            </div>
+            <Link href="/#beta" className="btn btn-primary mt-5 h-10 w-fit px-4">
+              {L.startFree}
+            </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-6">
-            <FooterCol title={f.product} items={PRODUCT} />
-            <FooterCol title={f.resources} items={RESOURCES} />
-            <FooterCol title={f.company} items={COMPANY} />
-          </div>
+          <FooterCol title={f.product} items={PRODUCT} />
+          <FooterCol title={f.resources} items={RESOURCES} />
+          <FooterCol title={f.company} items={COMPANY} />
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-[var(--border-subtle)] pt-6 text-xs text-[var(--fg-tertiary)] md:flex-row md:items-center md:justify-between">
+        <div className="site-footer-bar">
           <p>
             {f.copyrightBefore}{" "}
-            <a
-              href={BRAND.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-[var(--border-subtle)] underline-offset-2 transition hover:text-[var(--fg-primary)]"
-            >
+            <a href={BRAND.website} target="_blank" rel="noopener noreferrer">
               {BRAND.company}
             </a>
             {f.copyrightAfter}
           </p>
-          <div className="footer-lang flex flex-wrap items-center gap-3">
-            <LanguageToggle />
-            <a
-              href={BRAND.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline decoration-[var(--border-subtle)] underline-offset-2 transition hover:text-[var(--fg-primary)]"
-            >
+          <div className="footer-lang">
+            <a href={BRAND.website} target="_blank" rel="noopener noreferrer">
               {BRAND.domain}
             </a>
           </div>
@@ -88,25 +76,17 @@ export default function Footer() {
   );
 }
 
-const linkClass =
-  "rounded-[6px] text-base font-normal text-[var(--fg-secondary)] transition hover:text-[var(--fg-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--focus-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-page)]";
+const linkClass = "site-footer-link";
 
 function FooterCol({ title, items }) {
   return (
-    <div>
-      <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.14em] text-[var(--fg-tertiary)]">
-        {title}
-      </h3>
-      <ul data-footer-links="true" className="space-y-2">
+    <div className="site-footer-col">
+      <h3>{title}</h3>
+      <ul data-footer-links="true">
         {items.map((item) => (
           <li key={item.label + item.href}>
-            {item.external ? (
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={linkClass}
-              >
+            {item.external || item.href.startsWith("mailto:") ? (
+              <a href={item.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
                 {item.label}
               </a>
             ) : (

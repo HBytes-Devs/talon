@@ -60,7 +60,6 @@ export default function Hero() {
     let killed = false;
     let splitRevert = null;
     let timeline = null;
-    let floatTween = null;
     const mm = gsap.matchMedia();
 
     const boot = async () => {
@@ -85,7 +84,6 @@ export default function Hero() {
             [
               headline,
               ".hero-stage .summon-panel",
-              ".hero-stage .summon-workspaces",
               ".hero-copy [data-hero-badge]",
               ".hero-copy [data-hero-copy]",
               ".hero-underline",
@@ -101,18 +99,16 @@ export default function Hero() {
             tl.addLabel("summon", 0);
             tl.fromTo(
               ".hero-stage .summon-panel",
-              { autoAlpha: 0, y: 14, scale: 0.965, rotation: -2.6 },
+              { autoAlpha: 0, y: 14, scale: 0.985, rotation: -2.4 },
               {
                 autoAlpha: 1,
                 y: 0,
                 scale: 1,
-                rotation: -2.6,
+                rotation: -2.4,
                 duration: 0.5,
-                transformOrigin: "52% 42%",
               },
               "summon"
             );
-            tl.to(".hero-stage .summon-workspaces", { autoAlpha: 1, duration: 0.8 }, "summon");
             tl.fromTo(
               ".hero-copy [data-hero-badge]",
               { autoAlpha: 0, y: 12 },
@@ -150,20 +146,6 @@ export default function Hero() {
               { strokeDashoffset: 0, duration: 0.42, ease: "power3.out" },
               "<"
             );
-
-            tl.add(() => {
-              floatTween?.kill();
-              floatTween = gsap.to(".hero-stage .summon-panel", {
-                y: -5,
-                rotation: -2.1,
-                duration: 3.5,
-                ease: "sine.inOut",
-                yoyo: true,
-                repeat: -1,
-                transformOrigin: "52% 42%",
-                force3D: true,
-              });
-            });
 
             return tl;
           };
@@ -209,7 +191,6 @@ export default function Hero() {
               [
                 headline,
                 ".hero-stage .summon-panel",
-                ".hero-stage .summon-workspaces",
                 ".hero-copy [data-hero-badge]",
                 ".hero-copy [data-hero-copy]",
                 ".hero-underline",
@@ -222,8 +203,6 @@ export default function Hero() {
             killed = true;
             window.clearTimeout(failsafe);
             timeline?.kill();
-            floatTween?.kill();
-            floatTween = null;
             splitRevert?.();
           };
         }
@@ -234,8 +213,6 @@ export default function Hero() {
 
     return () => {
       killed = true;
-      floatTween?.kill();
-      floatTween = null;
       mm.revert();
     };
   }, [locale]);
@@ -243,7 +220,7 @@ export default function Hero() {
   return (
     <div className="hero-intro contents" ref={rootRef} key={locale}>
       <section
-        className="hero-section container-grid grid min-h-[760px] min-w-0 items-center gap-12 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pt-24"
+        className="hero-section container-grid grid min-h-[760px] min-w-0 items-center gap-12 pb-20 pt-32 md:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] md:pb-28 md:pt-24"
         id="top"
       >
         <div className="hero-copy min-w-0 max-w-full">
@@ -279,7 +256,7 @@ export default function Hero() {
             </svg>
           </div>
 
-          <div className="hero-stage-mobile mt-8 max-w-full overflow-hidden sm:hidden">
+          <div className="hero-stage-mobile mt-8 max-w-full sm:hidden">
             <SummonDemo />
           </div>
 
@@ -360,31 +337,7 @@ function SummonDemo() {
 
   return (
     <div className="summon-stage">
-      <div className="summon-field" aria-hidden="true" />
-      <div className="summon-workspaces" aria-hidden="true">
-        {[0, 1, 2].map((layer) => (
-          <div key={layer} className="summon-workspace" style={{ "--layer": layer }}>
-            <div className="summon-window-bar">
-              <span />
-              <span />
-              <span />
-              <i />
-            </div>
-            <div className="summon-window-body">
-              <span />
-              <span />
-              <span />
-              <div>
-                <span />
-                <span />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="summon-panel magnetic-panel">
-        <div className="surface-sweep" aria-hidden="true" />
+      <div className="summon-panel">
         <div className="summon-panel-top">
           <span className="summon-status">
             <svg
